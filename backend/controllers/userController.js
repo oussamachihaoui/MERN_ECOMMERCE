@@ -55,6 +55,7 @@ const authUser = expressAsyncHandler(async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
+      isAdmin: user.isAdmin,
     });
   } else {
     throw new Error("Invalid Email or Password");
@@ -73,6 +74,40 @@ const logoutUser = expressAsyncHandler(async (req, res) => {
 
 const updateUserCredentials = expressAsyncHandler(async (req, res) => {
   const { firstName, lastName, password, photo } = req.body;
+
+  const user = await User.findOne(req.user._id);
+
+  if (user) {
+    user.firstName = firstName || user.firstName;
+    user.lastName = lastName || user.lastName;
+    user.password = password || user.password;
+    user.photo = photo || user.photo;
+
+    const updatedUser = await user.save();
+    res.status(200).json({
+      id: updatedUser._id,
+      firstName: updatedUser.firstName,
+      lastName: updatedUser.lastName,
+      email: updatedUser.email,
+      photo: updatedUser.photo,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User is not found");
+  }
 });
 
-export { registerUser, authUser, logoutUser, updateUserCredentials };
+// admin Actions
+
+const getAllusers = expressAsyncHandler(async (req, res) => {
+  const allUsers = await User.find({});
+  res.json(allUsers);
+});
+
+export {
+  registerUser,
+  authUser,
+  logoutUser,
+  updateUserCredentials,
+  getAllusers,
+};
