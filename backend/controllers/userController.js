@@ -104,10 +104,30 @@ const getAllusers = expressAsyncHandler(async (req, res) => {
   res.json(allUsers);
 });
 
+const deleteUserById = expressAsyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id);
+  if (user) {
+    if (user.isAdmin) {
+      res.status(400);
+      throw new Error("Cannot delete Admin");
+    }
+
+    await User.deleteOne({ _id: user._id });
+    res.json({
+      message: "user is deleted",
+    });
+  } else {
+    res.status(404);
+    throw new Error("User is not found");
+  }
+});
+
 export {
   registerUser,
   authUser,
   logoutUser,
   updateUserCredentials,
   getAllusers,
+  deleteUserById,
 };
