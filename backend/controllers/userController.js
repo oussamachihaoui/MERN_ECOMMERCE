@@ -106,20 +106,37 @@ const getAllusers = expressAsyncHandler(async (req, res) => {
 
 const deleteUserById = expressAsyncHandler(async (req, res) => {
   const { id } = req.params;
-  const user = await User.findById(id);
-  if (user) {
-    if (user.isAdmin) {
-      res.status(400);
-      throw new Error("Cannot delete Admin");
-    }
+  try {
+    const user = await User.findById(id);
+    if (user) {
+      if (user.isAdmin) {
+        res.status(400);
+        throw new Error("Cannot delete Admin");
+      }
 
-    await User.deleteOne({ _id: user._id });
-    res.json({
-      message: "user is deleted",
-    });
-  } else {
+      await User.deleteOne({ _id: user._id });
+      res.json({
+        message: "user is deleted",
+      });
+    }
+  } catch (error) {
     res.status(404);
     throw new Error("User is not found");
+  }
+});
+
+const getUserById = expressAsyncHandler(async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findById(id).select("-password");
+
+    if (user) {
+      res.json(user);
+    }
+  } catch (error) {
+    res.status(404).json({
+      message: "user is not found",
+    });
   }
 });
 
@@ -130,4 +147,5 @@ export {
   updateUserCredentials,
   getAllusers,
   deleteUserById,
+  getUserById,
 };
