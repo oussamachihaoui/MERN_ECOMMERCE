@@ -1,13 +1,44 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { login } from "../../Redux/apis/userSlice.js";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
+  // consts
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { loggedIn } = useSelector((state) => state.user);
+
+  //state
+  const [loginUser, setLoginUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  // handlers
+  const handleChangeForm = function (e) {
+    setLoginUser({ ...loginUser, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmitForm = function (e) {
+    e.preventDefault();
+    dispatch(login(loginUser));
+  };
+
+  // on open
+  useEffect(() => {
+    if (loggedIn) {
+      navigate("/");
+    }
+  }, [loggedIn]);
+
+  // UI
   return (
     <>
       {/* component */}
       <div className="h-screen md:flex">
         <div className="flex md:w-1/2 justify-center py-10 items-center bg-">
-          <form className="bg-white">
+          <form className="bg-white" onSubmit={handleSubmitForm}>
             <h1 className="text-gray-800 font-bold text-2xl mb-1">
               Hello Again!
             </h1>
@@ -76,10 +107,11 @@ const Login = () => {
               <input
                 className=" pl-2 outline-none  "
                 type="email"
-                name=""
-                id=""
+                name="email"
+                id="email"
                 placeholder="Email Address"
                 size={35}
+                onChange={handleChangeForm}
               />
             </div>
             <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
@@ -99,8 +131,9 @@ const Login = () => {
                 className="pl-2 outline-none border-none"
                 type="password"
                 name="password"
-                id=""
+                id="password"
                 placeholder="Password"
+                onChange={handleChangeForm}
               />
             </div>
             <button

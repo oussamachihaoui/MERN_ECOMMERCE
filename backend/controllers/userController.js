@@ -58,7 +58,7 @@ const authUser = expressAsyncHandler(async (req, res) => {
       isAdmin: user.isAdmin,
     });
   } else {
-    throw new Error("Invalid Email or Password");
+    res.status(401).json({ message: "Invalid Email or password" });
   }
 });
 
