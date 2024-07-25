@@ -10,9 +10,14 @@ import {
 } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./Redux/store.js";
+import Login from "./Pages/Auth/Login.jsx";
 
 const router = createBrowserRouter(
-  createRoutesFromElements(<Route path="/" element={<App />} />)
+  createRoutesFromElements(
+    <Route path="/" element={<App />}>
+      <Route path="/login" element={<Login />} />
+    </Route>
+  )
 );
 
 ReactDOM.createRoot(document.getElementById("root")).render(

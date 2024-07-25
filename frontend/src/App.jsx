@@ -8,7 +8,7 @@ const App = () => {
     <>
       <Toaster position="top-right" />
       <Navigation />
-      <main className="py-3">
+      <main className="">
         <Outlet />
       </main>
     </>
