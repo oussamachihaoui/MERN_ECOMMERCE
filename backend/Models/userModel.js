@@ -7,7 +7,8 @@ const userSchema = mongoose.Schema(
     lastName: { type: String, require: true },
     photo: {
       type: String,
-      default: "../assets/avatar/default_user_photo.webp",
+      default:
+        "https://upload.wikimedia.org/wikipedia/commons/b/b5/Windows_10_Default_Profile_Picture.svg",
     },
     isAdmin: {
       type: Boolean,
