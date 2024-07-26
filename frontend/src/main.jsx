@@ -12,10 +12,16 @@ import { Provider } from "react-redux";
 import store from "./Redux/store.js";
 import Login from "./Pages/Auth/Login.jsx";
 import Register from "./Pages/Auth/Register.jsx";
+import PrivateRoute from "./Components/PrivateRoute.jsx";
+import Profile from "./Pages/User/Profile.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
+      <Route path="" element={<PrivateRoute />}>
+        <Route path="/profile" element={<Profile />} />
+      </Route>
+
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
     </Route>

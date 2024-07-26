@@ -10,8 +10,6 @@ const Login = () => {
   const { loggedIn } = useSelector((state) => state.user);
   const { userInfo } = useSelector((state) => state.auth);
 
-  console.log(userInfo);
-
   //state
   const [loginUser, setLoginUser] = useState({
     email: "",

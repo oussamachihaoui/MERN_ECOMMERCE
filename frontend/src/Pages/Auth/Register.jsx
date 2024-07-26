@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { signUp } from "../../Redux/apis/userSlice";
 import toast from "react-hot-toast";
 
 const Register = () => {
+  const { userInfo } = useSelector((state) => state.auth);
   // consts
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -36,6 +37,12 @@ const Register = () => {
       navigate("/");
     }
   };
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/");
+    }
+  }, [userInfo]);
 
   return (
     <>
@@ -183,7 +190,7 @@ const Register = () => {
           </form>
         </div>
         <img
-          className="relative overflow-hidden md:flex w-1/2  i justify-around items-center hidden"
+          className="relative overflow-hidden md:flex w-1/2  i justify-around items-center hidden  "
           src="https://images.unsplash.com/photo-1618556450991-2f1af64e8191?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         />
       </div>
