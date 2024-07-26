@@ -27,9 +27,8 @@ const Navigation = () => {
 
   const handleLogoutUser = function (e) {
     e.preventDefault();
-    dispatch(logout());
+    dispatch(logout(navigate));
     dispatch(clearCredentials());
-    navigate("/");
   };
 
   const toggledropDownOpen = function () {

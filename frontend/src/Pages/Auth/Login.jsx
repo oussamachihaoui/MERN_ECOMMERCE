@@ -8,6 +8,9 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loggedIn } = useSelector((state) => state.user);
+  const { userInfo } = useSelector((state) => state.auth);
+
+  console.log(userInfo);
 
   //state
   const [loginUser, setLoginUser] = useState({
@@ -27,10 +30,10 @@ const Login = () => {
 
   // on open
   useEffect(() => {
-    if (loggedIn) {
+    if (userInfo) {
       navigate("/");
     }
-  }, [loggedIn]);
+  }, [userInfo]);
 
   // UI
   return (
@@ -69,6 +72,7 @@ const Login = () => {
                 placeholder="Email Address"
                 size={35}
                 onChange={handleChangeForm}
+                required={true}
               />
             </div>
             <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
@@ -91,6 +95,7 @@ const Login = () => {
                 id="password"
                 placeholder="Password"
                 onChange={handleChangeForm}
+                required={true}
               />
             </div>
             <button
@@ -100,10 +105,10 @@ const Login = () => {
               Login
             </button>
             <Link
-              className="text-sm ml-2 hover:text-blue-500 cursor-pointer"
+              className="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:underline"
               to={"/register"}
             >
-              Don't have an account? click here
+              Don't have an account? Sign up
             </Link>
           </form>
         </div>
