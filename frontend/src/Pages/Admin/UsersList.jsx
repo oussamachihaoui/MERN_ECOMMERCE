@@ -7,6 +7,29 @@ export const UsersList = () => {
   //consts
   const { allUsers, deletedUserByAdmin } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  let sortByItem;
+
+  console.log(allUsers);
+
+  // states
+  const [sortBy, setSortBy] = useState("Sort by ...");
+
+  // sorting
+  if (sortBy === "Sort by ...") sortByItem = allUsers;
+
+  if (sortBy === "Name") {
+    sortByItem = allUsers
+      .slice()
+      .sort((a, b) => a.firstName.localeCompare(b.firstName));
+  }
+
+  if (sortBy === "Date") {
+    sortByItem = allUsers
+      .slice()
+      .sort((a, b) =>
+        a.createdAt < b.createdAt ? -1 : a.createdAt > b.createdAt ? 1 : 0
+      );
+  }
 
   useEffect(() => {
     dispatch(getAllUsers());
@@ -37,8 +60,16 @@ export const UsersList = () => {
                 </div>
               </div>
               <div className="relative">
-                <select className=" h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
-                  <option>All</option>
+                <select
+                  className=" h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500"
+                  value={sortBy}
+                  onChange={(e) => {
+                    setSortBy(e.target.value);
+                  }}
+                >
+                  <option disabled>Sort by ...</option>
+                  <option>Name</option>
+                  <option>Date</option>
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                   <svg
@@ -89,7 +120,7 @@ export const UsersList = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {allUsers?.map((user) => (
+                  {sortByItem?.map((user) => (
                     <UsersTable data={user} key={user._id} />
                   ))}
                 </tbody>
