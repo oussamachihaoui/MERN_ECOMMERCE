@@ -69,6 +69,19 @@ export const updateUserCredentials = createAsyncThunk(
   }
 );
 
+///////////////////////////////////////////////////////////////
+// ADMIN
+
+export const getAllUsers = createAsyncThunk("/admin/users", async () => {
+  axios.defaults.withCredentials = true;
+  try {
+    const { data } = await axios.get("http://localhost:5000/api/users/");
+    return data;
+  } catch (error) {
+    console.log(error.response.data.message);
+  }
+});
+
 const userSlice = createSlice({
   name: "user",
   initialState: {},
@@ -129,6 +142,22 @@ const userSlice = createSlice({
     });
 
     builder.addCase(updateUserCredentials.rejected, (state) => {
+      state.loading = false;
+    });
+
+    ////////////////////////////////////////////
+    //ADMIN
+
+    builder.addCase(getAllUsers.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(getAllUsers.fulfilled, (state, action) => {
+      state.loading = true;
+      state.allUsers = action.payload;
+    });
+
+    builder.addCase(getAllUsers.rejected, (state) => {
       state.loading = false;
     });
   },
