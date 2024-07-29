@@ -74,15 +74,23 @@ const logoutUser = expressAsyncHandler(async (req, res) => {
 // update User credentials
 
 const updateUserCredentials = expressAsyncHandler(async (req, res) => {
-  const { firstName, lastName, password, photo } = req.body;
+  const { firstName, lastName, password, photo, email } = req.body;
 
   const user = await User.findOne(req.user._id);
 
   if (user) {
+    const existedEmail = await User.findOne({ email });
+
+    if (existedEmail && existedEmail._id.toString() !== user._id.toString()) {
+      res.status(400).json({ message: "Email already exists. Cannot update." });
+      return;
+    }
+
     user.firstName = firstName || user.firstName;
     user.lastName = lastName || user.lastName;
     user.password = password || user.password;
     user.photo = photo || user.photo;
+    user.email = email || user.email;
 
     const updatedUser = await user.save();
     res.status(200).json({
@@ -91,6 +99,7 @@ const updateUserCredentials = expressAsyncHandler(async (req, res) => {
       lastName: updatedUser.lastName,
       email: updatedUser.email,
       photo: updatedUser.photo,
+      isAdmin: updatedUser.isAdmin,
     });
   } else {
     res.status(404);

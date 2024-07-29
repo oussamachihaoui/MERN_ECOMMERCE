@@ -51,6 +51,24 @@ export const signUp = createAsyncThunk("/user/signup", async (user) => {
   }
 });
 
+export const updateUserCredentials = createAsyncThunk(
+  "/user/update",
+  async (user, { dispatch }) => {
+    axios.defaults.withCredentials = true;
+    try {
+      const { data } = await axios.put(
+        "http://localhost:5000/api/users/",
+        user
+      );
+      toast.success("Updated successfully");
+      dispatch(setCredentials(data));
+      return data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState: {},
@@ -96,6 +114,21 @@ const userSlice = createSlice({
     });
 
     builder.addCase(signUp.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // UPDATE USER CREDENTIALS /////////////////
+
+    builder.addCase(updateUserCredentials.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(updateUserCredentials.fulfilled, (state, action) => {
+      state.loading = false;
+      state.userCredentialsUpdated = action.payload;
+    });
+
+    builder.addCase(updateUserCredentials.rejected, (state) => {
       state.loading = false;
     });
   },

@@ -95,8 +95,8 @@ const Navigation = () => {
             <>
               <img
                 src={userInfo.photo}
-                alt="avatar_picture"
-                className="w-7 h-7 mr-2"
+                alt="profile_picture"
+                className="w-7 h-7 mr-2 rounded-full"
               />
               <span className="text-white hidden nav-item-name">
                 {userInfo.firstName}
