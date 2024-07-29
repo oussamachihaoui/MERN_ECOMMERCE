@@ -5,12 +5,12 @@ import { getAllUsers } from "../../Redux/apis/userSlice";
 
 export const UsersList = () => {
   //consts
-  const { allUsers } = useSelector((state) => state.user);
+  const { allUsers, deletedUserByAdmin } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllUsers());
-  }, []);
+  }, [deletedUserByAdmin]);
   return (
     <>
       <div className="container mx-auto px-4 sm:px-8">

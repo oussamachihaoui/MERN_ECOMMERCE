@@ -1,8 +1,14 @@
 import React from "react";
 import { FaTrash } from "react-icons/fa";
+import { deleteUser } from "../../Redux/apis/userSlice";
+import { useDispatch } from "react-redux";
+
 const UsersTable = ({ data }) => {
+  // consts
   const { _id, firstName, lastName, email, photo, isAdmin, createdAt } = data;
   const parsedDate = new Date(createdAt);
+  const dispatch = useDispatch();
+
   return (
     <tr>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -34,8 +40,12 @@ const UsersTable = ({ data }) => {
         <p className="text-gray-900 whitespace-no-wrap">{`${parsedDate.toDateString()} (${parsedDate.toLocaleTimeString()})`}</p>
       </td>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-        <span className="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
-          <FaTrash />
+        <span className="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight cursor-pointer">
+          <FaTrash
+            onClick={() => {
+              dispatch(deleteUser(_id));
+            }}
+          />
         </span>
       </td>
     </tr>

@@ -82,6 +82,22 @@ export const getAllUsers = createAsyncThunk("/admin/users", async () => {
   }
 });
 
+export const deleteUser = createAsyncThunk(
+  "/admin/users/delete",
+  async (id) => {
+    axios.defaults.withCredentials = true;
+    try {
+      const { data } = await axios.delete(
+        `http://localhost:5000/api/users/${id}`
+      );
+      toast.success("User is deleted successfully");
+      return data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState: {},
@@ -148,6 +164,7 @@ const userSlice = createSlice({
     ////////////////////////////////////////////
     //ADMIN
 
+    //GET ALL USERS
     builder.addCase(getAllUsers.pending, (state) => {
       state.loading = true;
     });
@@ -158,6 +175,20 @@ const userSlice = createSlice({
     });
 
     builder.addCase(getAllUsers.rejected, (state) => {
+      state.loading = false;
+    });
+
+    //DELETE USER BY ID
+    builder.addCase(deleteUser.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(deleteUser.fulfilled, (state, action) => {
+      state.loading = false;
+      state.deletedUserByAdmin = action.payload;
+    });
+
+    builder.addCase(deleteUser.rejected, (state) => {
       state.loading = false;
     });
   },
