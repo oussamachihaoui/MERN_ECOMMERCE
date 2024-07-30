@@ -34,6 +34,21 @@ const getAllCatagories = expressAsyncHandler(async (req, res) => {
   res.json(catagories);
 });
 
+// get a specific catagory by ID
+
+const getSpecificCatagory = expressAsyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const catagory = await Catagory.findOne({ _id: id });
+  if (catagory) {
+    res.status(200).json(catagory);
+  } else {
+    res.status(400).json({
+      message: "Catagory is not found",
+    });
+  }
+});
+
 // update a catagory
 const updateCatagory = expressAsyncHandler(async (req, res) => {
   const { name } = req.body;
@@ -79,4 +94,10 @@ const deleteCatagory = expressAsyncHandler(async (req, res) => {
   }
 });
 
-export { createCatagory, updateCatagory, deleteCatagory, getAllCatagories };
+export {
+  createCatagory,
+  updateCatagory,
+  deleteCatagory,
+  getAllCatagories,
+  getSpecificCatagory,
+};
