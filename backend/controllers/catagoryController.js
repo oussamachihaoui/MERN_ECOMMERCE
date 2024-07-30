@@ -29,6 +29,10 @@ const createCatagory = expressAsyncHandler(async (req, res) => {
 });
 
 // get all catagories
+const getAllCatagories = expressAsyncHandler(async (req, res) => {
+  const catagories = await Catagory.find({});
+  res.json(catagories);
+});
 
 // update a catagory
 const updateCatagory = expressAsyncHandler(async (req, res) => {
@@ -75,4 +79,4 @@ const deleteCatagory = expressAsyncHandler(async (req, res) => {
   }
 });
 
-export { createCatagory, updateCatagory, deleteCatagory };
+export { createCatagory, updateCatagory, deleteCatagory, getAllCatagories };
