@@ -31,7 +31,35 @@ const createCatagory = expressAsyncHandler(async (req, res) => {
 // get a catagory
 
 // update a catagory
+const updateCatagory = expressAsyncHandler(async (req, res) => {
+  const { name } = req.body;
+  const { id } = req.params;
+
+  const catagory = await Catagory.findOne(id);
+
+  if (catagory) {
+    const existedCatagory = await Catagory.findOne({ name });
+    if (
+      existedCatagory &&
+      existedCatagory._id.toString() !== catagory._id.toString()
+    ) {
+      res.status(400).json({
+        message: "Name is already taken",
+      });
+      return;
+    }
+
+    catagory.name = name || catagory.name;
+    const updatedCatagory = await catagory.save();
+
+    res.status(200).json(updatedCatagory);
+  } else {
+    res.status(404).json({
+      message: "Catagory is not found",
+    });
+  }
+});
 
 //delete a catagory
 
-export { createCatagory };
+export { createCatagory, updateCatagory };
