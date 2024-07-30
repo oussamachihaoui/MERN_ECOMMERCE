@@ -28,14 +28,14 @@ const createCatagory = expressAsyncHandler(async (req, res) => {
   }
 });
 
-// get a catagory
+// get all catagories
 
 // update a catagory
 const updateCatagory = expressAsyncHandler(async (req, res) => {
   const { name } = req.body;
-  const { id } = req.params;
+  const { catagoryId } = req.params;
 
-  const catagory = await Catagory.findOne(id);
+  const catagory = await Catagory.findOne({ _id: catagoryId });
 
   if (catagory) {
     const existedCatagory = await Catagory.findOne({ name });
@@ -46,7 +46,6 @@ const updateCatagory = expressAsyncHandler(async (req, res) => {
       res.status(400).json({
         message: "Name is already taken",
       });
-      return;
     }
 
     catagory.name = name || catagory.name;
@@ -61,5 +60,19 @@ const updateCatagory = expressAsyncHandler(async (req, res) => {
 });
 
 //delete a catagory
+const deleteCatagory = expressAsyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const catagory = await Catagory.findById(id);
+  if (catagory) {
+    await Catagory.deleteOne({ _id: catagory._id });
+    res.status(200).json({
+      message: "Deleted successfully",
+    });
+  } else {
+    res.status(400).json({
+      message: "Catagory is not found",
+    });
+  }
+});
 
-export { createCatagory, updateCatagory };
+export { createCatagory, updateCatagory, deleteCatagory };
