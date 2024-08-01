@@ -13,8 +13,6 @@ export const UsersList = () => {
   const [sortBy, setSortBy] = useState("Sort by ...");
   const [searchUser, setSearchUser] = useState("");
 
-  console.log(searchUser);
-
   // sorting
   if (sortBy === "Sort by ...") sortByItem = allUsers;
 
