@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+
 import toast from "react-hot-toast";
 
 // create catagory
@@ -32,6 +33,26 @@ export const getAllCatagories = createAsyncThunk("/catagories", async () => {
   }
 });
 
+// update catagory
+
+// delete catagory
+
+export const deleteCatagory = createAsyncThunk(
+  "/catagory/delete",
+  async (id) => {
+    axios.defaults.withCredentials = true;
+    try {
+      const { data } = await axios.delete(
+        `http://localhost:5000/api/catagory/${id}`
+      );
+      toast.success("Deleted catagory successfully");
+      return data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  }
+);
+
 const catagorySlice = createSlice({
   name: "catagory",
   initialState: {},
@@ -61,6 +82,20 @@ const catagorySlice = createSlice({
       state.allCatagories = action.payload;
     });
     builder.addCase(getAllCatagories.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // DELETE A CATAGORY //////////////////////////////
+    builder.addCase(deleteCatagory.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(deleteCatagory.fulfilled, (state, action) => {
+      state.loading = false;
+      state.deletedCatagory = action.payload;
+    });
+
+    builder.addCase(deleteCatagory.rejected, (state) => {
       state.loading = false;
     });
   },

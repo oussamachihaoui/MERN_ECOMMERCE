@@ -8,13 +8,13 @@ import ModalComponent from "../../Components/ModalComponent";
 const CatagoryList = () => {
   // consts
   const dispatch = useDispatch();
-  const { allCatagories, createdCatagory } = useSelector(
+  const { allCatagories, createdCatagory, deletedCatagory } = useSelector(
     (state) => state.catagory
   );
 
   useEffect(() => {
     dispatch(getAllCatagories());
-  }, [createdCatagory]);
+  }, [createdCatagory, deletedCatagory]);
 
   return (
     <>
