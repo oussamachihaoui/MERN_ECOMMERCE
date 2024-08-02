@@ -1,9 +1,10 @@
-import { Button, Modal, Label, TextInput } from "flowbite-react";
+import { Button, Modal, Label, TextInput, FileInput } from "flowbite-react";
 import { useState } from "react";
 import { IoIosAddCircle } from "react-icons/io";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { createCatagory } from "../Redux/apis/catagorySlice";
+import axios from "axios";
 
 const ModalComponent = () => {
   //consts
@@ -11,9 +12,9 @@ const ModalComponent = () => {
   //states
   const [addNewCatagory, setAddNewCatagory] = useState({
     name: "",
-    photo: "",
   });
   const [openModal, setOpenModal] = useState(false);
+  const [uploadImg, setUploadImg] = useState(null);
 
   //handlers
 
@@ -21,13 +22,28 @@ const ModalComponent = () => {
     setAddNewCatagory({ ...addNewCatagory, [e.target.name]: e.target.value });
   };
 
-  const handleSubmitNewCatagory = function (e) {
+  const handleSubmitNewCatagory = async function (e) {
     e.preventDefault();
-    dispatch(createCatagory(addNewCatagory));
-    setOpenModal(false);
-  };
+    if (uploadImg) {
+      const formData = new FormData();
+      formData.append("file", uploadImg);
+      formData.append("upload_preset", "oussamaCh");
 
-  console.log(addNewCatagory);
+      const { data } = await axios.post(
+        "https://api.cloudinary.com/v1_1/dpcnuiynn/image/upload",
+        // "https://api.cloudinary.com/v1_1/dpcnuiynn/image/upload?upload_preset=oussamaCh",
+
+        formData,
+        { withCredentials: true }
+      );
+
+      dispatch(createCatagory({ ...addNewCatagory, photo: data.url }));
+      setOpenModal(false);
+    } else {
+      dispatch(createCatagory(addNewCatagory));
+      setOpenModal(false);
+    }
+  };
 
   return (
     <>
@@ -36,15 +52,18 @@ const ModalComponent = () => {
         onClick={() => setOpenModal(true)}
       />
       <Modal show={openModal} onClose={() => setOpenModal(false)}>
-        <Modal.Header>Movie details</Modal.Header>
+        <Modal.Header>Catagory details</Modal.Header>
 
         <Modal.Body>
           <form>
             <Label>Catagory Name:</Label>
             <TextInput type="text" name="name" onChange={handleOnChange} />
 
-            <Label>Catagory Image Url:</Label>
-            <TextInput type="text" name="photo" onChange={handleOnChange} />
+            <Label>Catagory Image :</Label>
+            <FileInput
+              type="file"
+              onChange={(e) => setUploadImg(e.target.files[0])}
+            />
           </form>
         </Modal.Body>
         <Modal.Footer>

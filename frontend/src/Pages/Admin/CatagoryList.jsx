@@ -47,8 +47,8 @@ const CatagoryList = () => {
           </div>
         </form>
       </div>
-      <div className="flex justify-center items-center mt-10">
-        <div className="grid  grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 w-[75%] h-screen content-center  ">
+      <div className="flex justify-center items-center my-10 mx-auto">
+        <div className="grid  grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 w-[85%] h-[85vh] content-stretch items-stretch  ">
           {allCatagories?.map((cata) => (
             <CatagoryCard data={cata} key={cata._id} />
           ))}

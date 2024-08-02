@@ -3,7 +3,7 @@ import Catagory from "../Models/catagoryModel.js";
 
 // create catagory
 const createCatagory = expressAsyncHandler(async (req, res) => {
-  const { name } = req.body;
+  const { name, photo } = req.body;
   const existsCatagory = await Catagory.findOne({ name });
 
   if (!name) {
@@ -17,7 +17,7 @@ const createCatagory = expressAsyncHandler(async (req, res) => {
     });
     return;
   }
-  const catagory = await Catagory.create({ name });
+  const catagory = await Catagory.create({ name, photo });
 
   if (catagory) {
     res.status(201).json(catagory);
