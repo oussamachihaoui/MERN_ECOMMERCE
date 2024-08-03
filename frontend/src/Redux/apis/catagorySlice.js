@@ -35,6 +35,23 @@ export const getAllCatagories = createAsyncThunk("/catagories", async () => {
 
 // update catagory
 
+export const updateCatagory = createAsyncThunk(
+  "/catagory/update",
+  async ({ catagoryId, newName, newPhoto }) => {
+    axios.defaults.withCredentials = true;
+    try {
+      const { data } = await axios.put(
+        `http://localhost:5000/api/catagory/${catagoryId}`,
+        { name: newName, photo: newPhoto }
+      );
+      toast.success("Updated Successfully");
+      return data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  }
+);
+
 // delete catagory
 
 export const deleteCatagory = createAsyncThunk(
@@ -96,6 +113,20 @@ const catagorySlice = createSlice({
     });
 
     builder.addCase(deleteCatagory.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // UPDATE CATAGORY //////////////////////////////////
+    builder.addCase(updateCatagory.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(updateCatagory.fulfilled, (state, action) => {
+      state.loading = false;
+      state.updatedCatagory = action.payload;
+    });
+
+    builder.addCase(updateCatagory.rejected, (state) => {
       state.loading = false;
     });
   },

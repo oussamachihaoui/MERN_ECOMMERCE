@@ -51,31 +51,34 @@ const getSpecificCatagory = expressAsyncHandler(async (req, res) => {
 
 // update a catagory
 const updateCatagory = expressAsyncHandler(async (req, res) => {
-  const { name } = req.body;
+  const { name, photo } = req.body;
   const { catagoryId } = req.params;
 
-  const catagory = await Catagory.findOne({ _id: catagoryId });
+  console.log(req.body);
 
-  if (catagory) {
-    const existedCatagory = await Catagory.findOne({ name });
-    if (
-      existedCatagory &&
-      existedCatagory._id.toString() !== catagory._id.toString()
-    ) {
-      res.status(400).json({
-        message: "Name is already taken",
-      });
-    }
+  const catagory = await Catagory.findById(catagoryId);
 
-    catagory.name = name || catagory.name;
-    const updatedCatagory = await catagory.save();
-
-    res.status(200).json(updatedCatagory);
-  } else {
-    res.status(404).json({
+  if (!catagory) {
+    return res.status(404).json({
       message: "Catagory is not found",
     });
   }
+
+  const existedCatagory = await Catagory.findOne({ name });
+  if (
+    existedCatagory &&
+    existedCatagory._id.toString() !== catagory._id.toString()
+  ) {
+    return res.status(400).json({
+      message: "Name is already taken",
+    });
+  }
+
+  catagory.name = name || catagory.name;
+  catagory.photo = photo || catagory.photo;
+  const updatedCatagory = await catagory.save();
+
+  res.status(200).json(updatedCatagory);
 });
 
 //delete a catagory
