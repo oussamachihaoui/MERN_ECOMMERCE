@@ -16,8 +16,6 @@ const CatagoryCard = ({ data }) => {
   const [editName, setEditName] = useState(name);
   const [uploadImg, setUploadImg] = useState(null);
 
-  console.log(uploadImg);
-
   //handlers
   const handleUpdateCatagory = async function (e) {
     e.preventDefault();

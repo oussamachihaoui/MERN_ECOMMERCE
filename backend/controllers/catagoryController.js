@@ -54,8 +54,6 @@ const updateCatagory = expressAsyncHandler(async (req, res) => {
   const { name, photo } = req.body;
   const { catagoryId } = req.params;
 
-  console.log(req.body);
-
   const catagory = await Catagory.findById(catagoryId);
 
   if (!catagory) {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import CatagoryCard from "./CatagoryCard";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +10,9 @@ const CatagoryList = () => {
   const dispatch = useDispatch();
   const { allCatagories, createdCatagory, deletedCatagory, updatedCatagory } =
     useSelector((state) => state.catagory);
+
+  // state
+  const [searchCatagory, setSearchCatagory] = useState("");
 
   useEffect(() => {
     dispatch(getAllCatagories());
@@ -24,9 +27,10 @@ const CatagoryList = () => {
           <div className="relative">
             <input
               type="text"
-              name="q"
+              value={searchCatagory}
               className="w-full border h-12 shadow p-4 rounded-full outline-none"
               placeholder="search"
+              onChange={(e) => setSearchCatagory(e.target.value)}
             />
             <button type="submit">
               <svg
@@ -48,9 +52,15 @@ const CatagoryList = () => {
       </div>
       <div className="flex justify-center items-center my-10 mx-auto">
         <div className="grid  grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 w-[85%] h-[85vh] content-stretch items-stretch  ">
-          {allCatagories?.map((cata) => (
-            <CatagoryCard data={cata} key={cata._id} />
-          ))}
+          {allCatagories
+            ?.filter((cata) =>
+              cata.name
+                .toLocaleLowerCase()
+                .includes(searchCatagory.toLocaleLowerCase())
+            )
+            .map((cata) => (
+              <CatagoryCard data={cata} key={cata._id} />
+            ))}
         </div>
       </div>
     </>
