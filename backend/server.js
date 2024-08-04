@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import userRoutes from "./routes/userRoutes.js";
 import catagoryRoutes from "./routes/catagoryRoutes.js";
 import cors from "cors";
+import productRoutes from "./routes/productRoutes.js";
 
 //utils
 dotenv.config();
@@ -27,6 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use("/api/users", userRoutes);
 app.use("/api/catagory", catagoryRoutes);
+app.use("/api/product", productRoutes);
 
 //listen
 app.listen(PORT, () => {
