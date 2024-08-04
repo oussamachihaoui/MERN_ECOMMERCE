@@ -41,8 +41,22 @@ const createProduct = expressAsyncHandler(async (req, res) => {
 
 // get all products
 const getAllProducts = expressAsyncHandler(async (req, res) => {
-  const products = await Product.find({});
+  const products = await Product.find().populate("catagory");
   res.status(200).json(products);
+});
+
+// getSpecificProduct
+const getSpecificProduct = expressAsyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const product = await Product.findById(id);
+
+  if (product) {
+    res.json(product);
+  } else {
+    res.status(400).json({
+      message: "Product is not found",
+    });
+  }
 });
 
 // update product
@@ -70,5 +84,25 @@ const updateProduct = expressAsyncHandler(async (req, res) => {
   }
 });
 // delete product
+const deleteProduct = expressAsyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const product = await Product.findById(id);
 
-export { createProduct, getAllProducts, updateProduct };
+  if (product) {
+    await Product.deleteOne({ _id: product._id });
+    res.status(200).json({
+      message: "Product is deleted successfully",
+    });
+  } else {
+    res.status(400).json({
+      message: "Product is not found",
+    });
+  }
+});
+export {
+  createProduct,
+  getAllProducts,
+  updateProduct,
+  deleteProduct,
+  getSpecificProduct,
+};
