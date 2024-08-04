@@ -17,11 +17,16 @@ const productSchema = mongoose.Schema(
   {
     productName: { type: String, require: true },
     brand: { type: String, require: true },
-    photo: { type: String, require: true },
+    photo: {
+      type: String,
+      require: true,
+      default:
+        "https://mahadevfastfoodvns.websites.co.in/twenty-seventeen/img/product-placeholder.png",
+    },
     quantity: { type: Number, require: true, default: 0 },
     price: { type: Number, require: true, default: 0 },
     description: { type: String, require: true },
-    cataogry: {
+    catagory: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Catagory",
       require: true,
@@ -33,7 +38,5 @@ const productSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-const Review = mongoose.model("Review", reviewSchema);
-const Product = mongoose.model("Product", productSchema);
-
-export { Review, Product };
+export const Review = mongoose.model("Review", reviewSchema);
+export const Product = mongoose.model("Product", productSchema);
