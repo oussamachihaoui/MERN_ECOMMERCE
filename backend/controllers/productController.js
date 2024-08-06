@@ -102,17 +102,25 @@ const deleteProduct = expressAsyncHandler(async (req, res) => {
 
 // REVIEWS ON SPECIFIC PRODUCT
 
+// create review
+
 const addReview = expressAsyncHandler(async (req, res) => {
   const { id } = req.params;
   try {
     const { comment, rating } = req.body;
+    const product = await Product.findById(id);
+    if (!product) {
+      res.status(404).json({
+        message: "Product is not found",
+      });
+    }
     const review = await Review.create({
       comment: comment,
       rating: rating,
       createdBy: req.user._id,
     });
-    const product = await Product.findById(id);
-    product.reviews.push(review);
+
+    product.reviews.push(review._id);
     await product.save();
     res.status(200).json(product);
   } catch (error) {
@@ -123,6 +131,30 @@ const addReview = expressAsyncHandler(async (req, res) => {
   }
 });
 
+// get reviews
+const getAllReviews = expressAsyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const products = await Product.findById(id).populate("reviews");
+    if (!products) {
+      res.status(404).json({
+        message: "Product is not found",
+      });
+      return;
+    }
+
+    res.status(200).json(products.reviews);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "try again" });
+  }
+});
+
+// update review
+
+//delete review
+
 export {
   createProduct,
   getAllProducts,
@@ -130,4 +162,5 @@ export {
   deleteProduct,
   getSpecificProduct,
   addReview,
+  getAllReviews,
 };

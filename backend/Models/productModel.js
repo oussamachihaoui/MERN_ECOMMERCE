@@ -30,7 +30,7 @@ const productSchema = mongoose.Schema(
       ref: "Catagory",
       require: true,
     },
-    reviews: [reviewSchema],
+    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
     rating: { type: Number, require: true, default: 0 },
     countInStock: { type: Number, require: true, default: 0 },
   },
