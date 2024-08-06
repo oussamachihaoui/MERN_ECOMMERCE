@@ -7,14 +7,19 @@ import {
   updateProduct,
   deleteProduct,
   getSpecificProduct,
+  addReview,
 } from "../controllers/productController.js";
 
 const router = express.Router();
 
+// CRUD PRODUCT
 router.post("/", authenticate, authorizeAdmin, createProduct);
 router.get("/", getAllProducts);
 router.get("/:id", getSpecificProduct);
 router.put("/:id", authenticate, authorizeAdmin, updateProduct);
 router.delete("/:id", authenticate, authorizeAdmin, deleteProduct);
+
+// CRUD REVIEW
+router.post("/:id/reviews", authenticate, addReview);
 
 export default router;

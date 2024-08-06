@@ -1,5 +1,5 @@
 import expressAsyncHandler from "express-async-handler";
-import { Product } from "../Models/productModel.js";
+import { Product, Review } from "../Models/productModel.js";
 
 // create Product
 const createProduct = expressAsyncHandler(async (req, res) => {
@@ -99,10 +99,35 @@ const deleteProduct = expressAsyncHandler(async (req, res) => {
     });
   }
 });
+
+// REVIEWS ON SPECIFIC PRODUCT
+
+const addReview = expressAsyncHandler(async (req, res) => {
+  const { id } = req.params;
+  try {
+    const { comment, rating } = req.body;
+    const review = await Review.create({
+      comment: comment,
+      rating: rating,
+      createdBy: req.user._id,
+    });
+    const product = await Product.findById(id);
+    product.reviews.push(review);
+    await product.save();
+    res.status(200).json(product);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "try again ...",
+    });
+  }
+});
+
 export {
   createProduct,
   getAllProducts,
   updateProduct,
   deleteProduct,
   getSpecificProduct,
+  addReview,
 };
