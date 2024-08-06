@@ -180,7 +180,28 @@ const updateReview = expressAsyncHandler(async (req, res) => {
 });
 
 //delete review
+const deleteReview = expressAsyncHandler(async (req, res) => {
+  const { reviewId } = req.params;
+  try {
+    const review = await Review.findById(reviewId);
+    if (!review) {
+      res.status(404).json({
+        message: "Review is not found",
+      });
+      return;
+    }
 
+    await Review.deleteOne({ _id: review._id });
+    res.status(200).json({
+      message: "Review is deleted successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Try again ",
+    });
+  }
+});
 export {
   createProduct,
   getAllProducts,
@@ -190,4 +211,5 @@ export {
   addReview,
   getAllReviews,
   updateReview,
+  deleteReview,
 };
