@@ -9,6 +9,7 @@ import {
   getSpecificProduct,
   addReview,
   getAllReviews,
+  updateReview,
 } from "../controllers/productController.js";
 
 const router = express.Router();
@@ -23,5 +24,6 @@ router.delete("/:id", authenticate, authorizeAdmin, deleteProduct);
 // CRUD REVIEW
 router.post("/:id/reviews", authenticate, addReview);
 router.get("/:id/reviews", getAllReviews);
+router.put("/reviews/:reviewId", authenticate, updateReview);
 
 export default router;

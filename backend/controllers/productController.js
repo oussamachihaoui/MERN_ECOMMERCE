@@ -48,7 +48,7 @@ const getAllProducts = expressAsyncHandler(async (req, res) => {
 // getSpecificProduct
 const getSpecificProduct = expressAsyncHandler(async (req, res) => {
   const { id } = req.params;
-  const product = await Product.findById(id);
+  const product = await Product.findById(id).populate("reviews");
 
   if (product) {
     res.json(product);
@@ -152,6 +152,32 @@ const getAllReviews = expressAsyncHandler(async (req, res) => {
 });
 
 // update review
+const updateReview = expressAsyncHandler(async (req, res) => {
+  const { reviewId } = req.params;
+  const { comment, rating } = req.body;
+
+  try {
+    const review = await Review.findById(reviewId);
+
+    if (!review) {
+      res.status(404).json({
+        message: "Review not found",
+      });
+      return;
+    }
+
+    review.comment = comment || review.comment;
+    review.rating = rating || review.rating;
+
+    const updatedReview = await review.save();
+    res.status(200).json(updatedReview);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "try again",
+    });
+  }
+});
 
 //delete review
 
@@ -163,4 +189,5 @@ export {
   getSpecificProduct,
   addReview,
   getAllReviews,
+  updateReview,
 };
