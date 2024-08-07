@@ -27,7 +27,7 @@ const CatagoryCard = ({ data }) => {
       const { data } = await axios.post(
         "https://api.cloudinary.com/v1_1/dpcnuiynn/image/upload",
         formData,
-        { withCredentials: true }
+        { withCredentials: false }
       );
 
       dispatch(

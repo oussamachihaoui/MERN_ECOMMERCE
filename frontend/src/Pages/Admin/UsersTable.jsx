@@ -27,7 +27,7 @@ const UsersTable = ({ data }) => {
             <p className="text-gray-900 whitespace-no-wrap text-base">
               {firstName} {lastName}
             </p>
-            <p class="text-slate-500 font-light">{email}</p>
+            <p className="text-slate-500 font-light">{email}</p>
           </div>
         </div>
       </td>

@@ -34,7 +34,7 @@ const ModalComponent = () => {
         // "https://api.cloudinary.com/v1_1/dpcnuiynn/image/upload?upload_preset=oussamaCh",
 
         formData,
-        { withCredentials: true }
+        { withCredentials: false }
       );
 
       dispatch(createCatagory({ ...addNewCatagory, photo: data.url }));

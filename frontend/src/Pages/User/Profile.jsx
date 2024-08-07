@@ -44,7 +44,7 @@ const Profile = () => {
         "https://api.cloudinary.com/v1_1/dpcnuiynn/image/upload?upload_preset=oussamaCh",
 
         formData,
-        { withCredentials: true }
+        { withCredentials: false }
       );
 
       dispatch(updateUserCredentials({ ...updateUser, photo: data.url }));
