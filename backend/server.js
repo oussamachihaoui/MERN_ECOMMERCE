@@ -7,6 +7,7 @@ import userRoutes from "./routes/userRoutes.js";
 import catagoryRoutes from "./routes/catagoryRoutes.js";
 import cors from "cors";
 import productRoutes from "./routes/productRoutes.js";
+import wishlistRouter from "./routes/wishlistRoutes.js";
 
 //utils
 dotenv.config();
@@ -29,7 +30,7 @@ app.use(cookieParser());
 app.use("/api/users", userRoutes);
 app.use("/api/catagory", catagoryRoutes);
 app.use("/api/product", productRoutes);
-
+app.use("/api/wishlist", wishlistRouter);
 //listen
 app.listen(PORT, () => {
   console.log(`Listening On port ${PORT}`);

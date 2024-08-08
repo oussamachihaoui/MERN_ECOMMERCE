@@ -17,6 +17,7 @@ const userSchema = mongoose.Schema(
     },
     email: { type: String, require: true, unique: true },
     password: { type: String, require: true },
+    wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
   },
   { timestamps: true }
 );
