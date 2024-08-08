@@ -170,7 +170,7 @@ const userSlice = createSlice({
     });
 
     builder.addCase(getAllUsers.fulfilled, (state, action) => {
-      state.loading = true;
+      state.loading = false;
       state.allUsers = action.payload;
     });
 
