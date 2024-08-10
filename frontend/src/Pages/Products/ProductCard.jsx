@@ -1,4 +1,7 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { getSpecificProduct } from "../../Redux/apis/productSlice";
 
 const ProductCard = ({ product }) => {
   //consts
@@ -6,12 +9,22 @@ const ProductCard = ({ product }) => {
 
   return (
     <div className="relative flex w-96 flex-col  rounded-xl bg-gray-100/20 bg-clip-border text-gray-700 shadow-md mt-5">
-      <div className="relative mx-4 mt-4 h-96 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700">
+      <div className="relative mx-4 mt-4 h-96 overflow-hidden rounded-xl  bg-clip-border text-gray-700 group">
         <img
           src={photo}
           className="h-full w-full object-cover"
           alt="product-avatar picture"
         />
+        <div className="absolute inset-0 bg-black/30  opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="flex justify-center items-center h-full">
+            <Link
+              className="text-white font-extrabold text-xl -tracking-2"
+              to={`/productDetails/${product._id}`}
+            >
+              VIEW DETAILS
+            </Link>
+          </div>
+        </div>
       </div>
       <div className="p-6">
         <span className="  font-sans text-sm leading-relaxed text-gray-400 antialiased">

@@ -14,6 +14,19 @@ export const getAllProducts = createAsyncThunk("/products", async () => {
   }
 });
 
+// get a specific product
+
+export const getSpecificProduct = createAsyncThunk("/productId", async (id) => {
+  axios.defaults.withCredentials = true;
+  try {
+    const { data } = await axios.get(`http://localhost:5000/api/product/${id}`);
+    return data;
+  } catch (error) {
+    console.log(data);
+    toast.error(error.response.data.message);
+  }
+});
+
 // create product
 
 // update a product
@@ -36,6 +49,21 @@ const productSlice = createSlice({
     });
 
     builder.addCase(getAllProducts.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // GET A PRODUCT WITH ID
+
+    builder.addCase(getSpecificProduct.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(getSpecificProduct.fulfilled, (state, action) => {
+      state.loading = false;
+      state.getProductWithId = action.payload;
+    });
+
+    builder.addCase(getSpecificProduct.rejected, (state) => {
       state.loading = false;
     });
   },
