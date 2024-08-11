@@ -52,14 +52,14 @@ const CatagoryCard = ({ data }) => {
   return (
     <article className="relative  flex flex-col justify-end overflow-hidden rounded-2xl px-8 pb-8 pt-40 hover:scale-110 transition-all shadow-md  ">
       <TiDelete
-        className="text-3xl text-red-600 absolute top-0 right-0 z-50 hover:cursor-pointer"
+        className="text-3xl text-red-600 absolute top-0 right-0 z-10 hover:cursor-pointer"
         onClick={() => {
           dispatch(deleteCatagory(_id));
         }}
       />
 
       <RiEditCircleFill
-        className="text-2xl text-blue-600 absolute top-1 right-7 z-50 hover:cursor-pointer"
+        className="text-2xl text-blue-600 absolute top-1 right-7 z-10 hover:cursor-pointer"
         onClick={() => setOpenModal(true)}
       />
 

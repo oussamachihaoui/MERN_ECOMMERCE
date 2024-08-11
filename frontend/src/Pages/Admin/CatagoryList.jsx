@@ -4,6 +4,7 @@ import CatagoryCard from "./CatagoryCard";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCatagories } from "../../Redux/apis/catagorySlice";
 import ModalComponent from "../../Components/ModalComponent";
+import AdminMenu from "./AdminMenu";
 
 const CatagoryList = () => {
   // consts
@@ -20,6 +21,7 @@ const CatagoryList = () => {
 
   return (
     <>
+      <AdminMenu />
       <div className="h-24 max-w-[480px] mx-auto flex justify-center items-center">
         <ModalComponent />
 

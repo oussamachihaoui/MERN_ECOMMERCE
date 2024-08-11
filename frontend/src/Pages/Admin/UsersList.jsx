@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import UsersTable from "./UsersTable";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUsers } from "../../Redux/apis/userSlice";
+import AdminMenu from "./AdminMenu";
+AdminMenu;
 
 export const UsersList = () => {
   //consts
@@ -35,6 +37,7 @@ export const UsersList = () => {
   }, [deletedUserByAdmin]);
   return (
     <>
+      <AdminMenu />
       <div className="container w-[96%] mx-auto px-4 sm:px-8 ">
         <div className="py-8">
           <div>

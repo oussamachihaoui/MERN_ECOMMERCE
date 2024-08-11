@@ -28,11 +28,11 @@ const ProductDetails = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-wrap -mx-4">
           {/* Product Images */}
-          <div className="w-full  md:w-1/2 px-4 mb-8">
+          <div className=" w-full h-96 md:w-1/2 px-4 mb-8">
             <img
               src={photo}
               alt="Product"
-              className="w-full h-auto rounded-lg shadow-md mb-4"
+              className="w-full max-h-full  object-cover rounded-lg "
               id="mainImage"
             />
             {/* <div className="flex gap-4 py-4 justify-center overflow-x-auto">

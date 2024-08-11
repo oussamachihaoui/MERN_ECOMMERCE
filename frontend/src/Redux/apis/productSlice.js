@@ -28,6 +28,22 @@ export const getSpecificProduct = createAsyncThunk("/productId", async (id) => {
 });
 
 // create product
+export const createProduct = createAsyncThunk(
+  "/createProduct",
+  async (product) => {
+    axios.defaults.withCredentials = true;
+    try {
+      const { data } = await axios.post(
+        "http://localhost:5000/api/product/",
+        product
+      );
+      toast.success("Product created successfully");
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  }
+);
 
 // update a product
 
@@ -64,6 +80,19 @@ const productSlice = createSlice({
     });
 
     builder.addCase(getSpecificProduct.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // CREATE A PRODUCT
+
+    builder.addCase(createProduct.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(createProduct.fulfilled, (state, action) => {
+      state.loading = false;
+      state.createdProduct = action.payload;
+    });
+    builder.addCase(createProduct.rejected, (state) => {
       state.loading = false;
     });
   },
