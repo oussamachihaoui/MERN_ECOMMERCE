@@ -6,7 +6,7 @@ import AdminMenu from "../Admin/AdminMenu";
 
 const ProductList = () => {
   //consts
-  const { allProducts, loading, createdProduct } = useSelector(
+  const { allProducts, loading, createdProduct, deletedProduct } = useSelector(
     (state) => state.product
   );
 
@@ -14,15 +14,15 @@ const ProductList = () => {
 
   useEffect(() => {
     dispatch(getAllProducts());
-  }, [createdProduct]);
+  }, [createdProduct, deletedProduct]);
 
   return (
     <>
       <AdminMenu />
       <div className="w-[94%] mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-10  mb-5">
         {loading ? (
-          <div class="fixed top-0 right-0 h-screen w-screen z-50 flex justify-center items-center">
-            <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+          <div className="fixed top-0 right-0 h-screen w-screen z-50 flex justify-center items-center">
+            <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
           </div>
         ) : (
           allProducts?.map((product) => (

@@ -48,6 +48,19 @@ export const createProduct = createAsyncThunk(
 // update a product
 
 // delete a product
+export const deleteProduct = createAsyncThunk("/deleteProduct", async (id) => {
+  axios.defaults.withCredentials = true;
+  try {
+    const { data } = await axios.delete(
+      `http://localhost:5000/api/product/${id}`
+    );
+    toast.success("Product is deleted successfully");
+    return data;
+  } catch (error) {
+    console.log(error);
+    toast.error(error.response.data.message);
+  }
+});
 
 const productSlice = createSlice({
   name: "product",
@@ -93,6 +106,22 @@ const productSlice = createSlice({
       state.createdProduct = action.payload;
     });
     builder.addCase(createProduct.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // UPDATE PRODUCT
+
+    //DELETE A PRODUCT
+    builder.addCase(deleteProduct.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(deleteProduct.fulfilled, (state, action) => {
+      state.loading = false;
+      state.deletedProduct = action.payload;
+    });
+
+    builder.addCase(deleteProduct.rejected, (state) => {
       state.loading = false;
     });
   },
