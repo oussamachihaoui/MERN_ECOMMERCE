@@ -21,6 +21,7 @@ import ProductList from "./Pages/Products/ProductList.jsx";
 import ProductDetails from "./Pages/Products/ProductDetails.jsx";
 import AddProduct from "./Pages/Admin/AddProduct.jsx";
 import UpdateProduct from "./Pages/Admin/UpdateProduct.jsx";
+import WishList from "./Pages/Products/WishList.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,6 +32,7 @@ const router = createBrowserRouter(
 
       <Route path="" element={<PrivateRoute />}>
         <Route path="/profile" element={<Profile />} />
+        <Route path="/wishlist" element={<WishList />} />
       </Route>
 
       {/* ADMIN */}

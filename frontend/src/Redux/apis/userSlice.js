@@ -69,6 +69,19 @@ export const updateUserCredentials = createAsyncThunk(
   }
 );
 
+// USER WISHLIST
+
+export const getAllWishlist = createAsyncThunk("/wishlist", async () => {
+  axios.defaults.withCredentials = true;
+  try {
+    const { data } = await axios.get("http://localhost:5000/api/wishlist/");
+    return data;
+  } catch (error) {
+    console.log(error);
+    toast.error(error.response.data.message);
+  }
+});
+
 ///////////////////////////////////////////////////////////////
 // ADMIN
 
@@ -189,6 +202,22 @@ const userSlice = createSlice({
     });
 
     builder.addCase(deleteUser.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // WISHLIST USER ///////////////////////
+    //GET ALL WISHLIST
+
+    builder.addCase(getAllWishlist.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(getAllWishlist.fulfilled, (state, action) => {
+      state.loading = false;
+      state.allWishlistProducts = action.payload;
+    });
+
+    builder.addCase(getAllWishlist.rejected, (state) => {
       state.loading = false;
     });
   },

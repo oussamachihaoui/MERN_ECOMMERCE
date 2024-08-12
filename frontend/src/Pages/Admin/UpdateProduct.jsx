@@ -43,8 +43,6 @@ const UpdateProduct = () => {
     setEditProduct({ ...editProduct, [e.target.name]: e.target.value });
   };
 
-  console.log(editProduct);
-
   const handleUpdateProduct = async function (e) {
     e.preventDefault();
     if (uploadImg) {

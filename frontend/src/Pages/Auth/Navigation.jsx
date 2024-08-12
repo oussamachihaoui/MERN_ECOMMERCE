@@ -76,10 +76,10 @@ const Navigation = () => {
           <AiOutlineShoppingCart className="mr-2 mt-[3rem] " size={26} />
           <span className="hidden nav-item-name mt-[3rem]">Cart</span>
         </Link>
-        {/* favorites */}
+        {/* wishlist */}
         <Link
           className="flex items-center transition-transform transform hover:translate-x-1"
-          to={"/favorites"}
+          to={"/wishlist"}
         >
           <MdFavoriteBorder className="mr-2 mt-[3rem] " size={26} />
           <span className="hidden nav-item-name mt-[3rem]">Wishlist</span>

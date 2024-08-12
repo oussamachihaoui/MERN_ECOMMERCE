@@ -51,7 +51,6 @@ const AddProduct = () => {
     }
   };
 
-  console.log(addProduct);
   return (
     <>
       <AdminMenu />
