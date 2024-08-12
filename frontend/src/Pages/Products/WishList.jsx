@@ -5,13 +5,15 @@ import Product from "./Product";
 import AdminMenu from "../Admin/AdminMenu";
 
 const WishList = () => {
+  const dispatch = useDispatch();
+  const { allWishlistProducts, loading, deletedFromWishlist, addedToWishlist } =
+    useSelector((state) => state.user);
   //on open
   useEffect(() => {
     dispatch(getAllWishlist());
-  }, []);
+  }, [addedToWishlist, deletedFromWishlist]);
   // consts
-  const dispatch = useDispatch();
-  const { allWishlistProducts, loading } = useSelector((state) => state.user);
+
   const products = allWishlistProducts?.wishlist;
 
   return (

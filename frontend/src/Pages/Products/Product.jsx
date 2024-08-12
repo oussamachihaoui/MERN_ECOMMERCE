@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import HeartIcon from "./HeartIcon";
 
 const Product = ({ product }) => {
   return (
     <div className="bg-gray-50 rounded-md overflow-hidden cursor-pointer">
       <div className="w-full overflow-hidden group relative">
+        <HeartIcon product={product}/>
         <img
           src={product.photo}
           alt="Product 1"

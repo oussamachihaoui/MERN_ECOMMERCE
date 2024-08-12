@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { getSpecificProduct } from "../../Redux/apis/productSlice";
+import HeartIcon from "./HeartIcon";
 
 const ProductCard = ({ product }) => {
   //consts
@@ -10,6 +11,7 @@ const ProductCard = ({ product }) => {
   return (
     <div className="relative flex w-80 flex-col  rounded-xl bg-gray-100/20 bg-clip-border text-gray-700 shadow-md mt-5">
       <div className="relative mx-4 mt-4 h-80 overflow-hidden rounded-xl  bg-clip-border text-gray-700 group">
+        <HeartIcon product={product} />
         <img
           src={photo}
           className="h-full w-full object-cover"
