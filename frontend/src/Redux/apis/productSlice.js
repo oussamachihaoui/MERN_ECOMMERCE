@@ -46,6 +46,24 @@ export const createProduct = createAsyncThunk(
 );
 
 // update a product
+export const updateProduct = createAsyncThunk(
+  "/updateProduct",
+  async ({ id, newUpdate }) => {
+    axios.defaults.withCredentials = true;
+    try {
+      const { data } = await axios.put(
+        `http://localhost:5000/api/product/${id}`,
+        newUpdate
+      );
+      toast.success("Updated successfully");
+
+      return data;
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  }
+);
 
 // delete a product
 export const deleteProduct = createAsyncThunk("/deleteProduct", async (id) => {
@@ -110,6 +128,18 @@ const productSlice = createSlice({
     });
 
     // UPDATE PRODUCT
+    builder.addCase(updateProduct.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(updateProduct.fulfilled, (state, action) => {
+      state.loading = false;
+      state.updatedProduct = action.payload;
+    });
+
+    builder.addCase(updateProduct.rejected, (state) => {
+      state.loading = false;
+    });
 
     //DELETE A PRODUCT
     builder.addCase(deleteProduct.pending, (state) => {

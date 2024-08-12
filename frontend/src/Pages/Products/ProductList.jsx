@@ -6,15 +6,19 @@ import AdminMenu from "../Admin/AdminMenu";
 
 const ProductList = () => {
   //consts
-  const { allProducts, loading, createdProduct, deletedProduct } = useSelector(
-    (state) => state.product
-  );
+  const {
+    allProducts,
+    loading,
+    createdProduct,
+    deletedProduct,
+    updatedProduct,
+  } = useSelector((state) => state.product);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllProducts());
-  }, [createdProduct, deletedProduct]);
+  }, [createdProduct, deletedProduct, updatedProduct]);
 
   return (
     <>

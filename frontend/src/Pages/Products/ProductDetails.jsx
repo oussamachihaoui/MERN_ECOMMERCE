@@ -4,7 +4,7 @@ import {
   deleteProduct,
   getSpecificProduct,
 } from "../../Redux/apis/productSlice";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 
 const ProductDetails = () => {
   //consts
@@ -20,8 +20,8 @@ const ProductDetails = () => {
 
   if (!getProductWithId) {
     return (
-      <div class="fixed top-0 right-0 h-screen w-screen z-50 flex justify-center items-center">
-        <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+      <div className="fixed top-0 right-0 h-screen w-screen z-50 flex justify-center items-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
       </div>
     );
   }
@@ -190,7 +190,10 @@ const ProductDetails = () => {
                     </svg>
                     Delete Product
                   </button>
-                  <button className="bg-[#ADFF2F] flex gap-2 items-center  text-gray-800 px-6 py-2 rounded-md hover:bg-[#a4ff50] focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                  <Link
+                    className="bg-[#ADFF2F] flex gap-2 items-center  text-gray-800 px-6 py-2 rounded-md hover:bg-[#a4ff50] focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                    to={`/admin/updateProduct/${id}`}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -215,7 +218,7 @@ const ProductDetails = () => {
                       />
                     </svg>
                     Update Product
-                  </button>
+                  </Link>
                 </>
               ) : (
                 <>
