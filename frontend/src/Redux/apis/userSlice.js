@@ -84,13 +84,14 @@ export const getAllWishlist = createAsyncThunk("/wishlist", async () => {
 
 export const addProductToWishlist = createAsyncThunk(
   "/addToWishlist",
-  async (id) => {
+  async (id, { dispatch }) => {
     axios.defaults.withCredentials = true;
     try {
       const { data } = await axios.post(
         `http://localhost:5000/api/wishlist/${id}`
       );
       toast.success("Added to wishlist");
+      dispatch(getAllWishlist());
       return data;
     } catch (error) {
       console.log(error);
@@ -101,12 +102,14 @@ export const addProductToWishlist = createAsyncThunk(
 
 export const deleteProductFromWishlist = createAsyncThunk(
   "/deleteFromWishlist",
-  async (id) => {
+  async (id, { dispatch }) => {
     axios.defaults.withCredentials = true;
     try {
       const { data } = await axios.delete(
         `http://localhost:5000/api/wishlist/${id}`
       );
+      toast.success("Deleted from wishlist");
+      dispatch(getAllWishlist());
       return data;
     } catch (error) {
       console.log(error);

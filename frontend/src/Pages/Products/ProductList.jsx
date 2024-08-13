@@ -3,6 +3,7 @@ import ProductCard from "./ProductCard";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../../Redux/apis/productSlice";
 import AdminMenu from "../Admin/AdminMenu";
+import { getAllWishlist } from "../../Redux/apis/userSlice";
 
 const ProductList = () => {
   //consts
@@ -18,6 +19,7 @@ const ProductList = () => {
 
   useEffect(() => {
     dispatch(getAllProducts());
+    dispatch(getAllWishlist());
   }, [createdProduct, deletedProduct, updatedProduct]);
 
   return (

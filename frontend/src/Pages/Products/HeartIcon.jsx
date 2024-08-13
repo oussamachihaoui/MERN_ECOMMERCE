@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaHeart, FaRegHeart, FaVaadin } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addProductToWishlist,
   deleteProductFromWishlist,
-  getAllWishlist,
 } from "../../Redux/apis/userSlice";
 
 const HeartIcon = ({ product }) => {
