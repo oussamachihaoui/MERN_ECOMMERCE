@@ -53,7 +53,8 @@ const ProductDetails = () => {
     );
   };
 
-  console.log(addReview);
+  console.log(allReviewsForSpecificProduct);
+  console.log(createdReviewForProduct);
 
   if (!getProductWithId) {
     return (

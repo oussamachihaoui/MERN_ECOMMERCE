@@ -150,7 +150,7 @@ const addReview = expressAsyncHandler(async (req, res) => {
 
     product.reviews.push(review._id);
     await product.save();
-    res.status(200).json(product);
+    res.status(200).json(product.reviews);
   } catch (error) {
     console.log(error);
     res.status(500).json({

@@ -112,6 +112,7 @@ export const createReviewForProduct = createAsyncThunk(
         review
       );
       toast.success("Added review");
+      return data;
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
