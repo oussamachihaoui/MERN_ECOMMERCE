@@ -155,7 +155,13 @@ const getAllReviews = expressAsyncHandler(async (req, res) => {
   const { id } = req.params;
 
   try {
-    const products = await Product.findById(id).populate("reviews");
+    const products = await Product.findById(id).populate({
+      path: "reviews",
+      populate: {
+        path: "createdBy",
+      },
+    });
+
     if (!products) {
       res.status(404).json({
         message: "Product is not found",

@@ -80,6 +80,25 @@ export const deleteProduct = createAsyncThunk("/deleteProduct", async (id) => {
   }
 });
 
+// PRODUCT REVIEWS ////////////////////////////
+// GET ALL REVIEWS FOR SPECIFC PRODUCT
+
+export const getAllReviewsForSpecificProduct = createAsyncThunk(
+  "/allReviews",
+  async (id) => {
+    axios.defaults.withCredentials = true;
+    try {
+      const { data } = await axios.get(
+        `http://localhost:5000/api/product/${id}/reviews`
+      );
+      return data;
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  }
+);
+
 const productSlice = createSlice({
   name: "product",
   initialState: {},
@@ -152,6 +171,27 @@ const productSlice = createSlice({
     });
 
     builder.addCase(deleteProduct.rejected, (state) => {
+      state.loading = false;
+    });
+
+    //////////////////////////////////////////////////
+    // REVIEWS
+
+    // GET ALL REVIEWS FOR 1 PRODUCT
+
+    builder.addCase(getAllReviewsForSpecificProduct.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(
+      getAllReviewsForSpecificProduct.fulfilled,
+      (state, action) => {
+        state.loading = false;
+        state.allReviewsForSpecificProduct = action.payload;
+      }
+    );
+
+    builder.addCase(getAllReviewsForSpecificProduct.rejected, (state) => {
       state.loading = false;
     });
   },

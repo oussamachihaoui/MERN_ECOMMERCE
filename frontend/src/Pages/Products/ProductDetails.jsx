@@ -1,24 +1,35 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteProduct,
+  getAllReviewsForSpecificProduct,
   getSpecificProduct,
 } from "../../Redux/apis/productSlice";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import HeartIcon from "./HeartIcon";
 import AdminMenu from "../Admin/AdminMenu";
 import { BsBoxes } from "react-icons/bs";
+import Rating from "@mui/material/Rating";
+import Review from "./Review";
 
 const ProductDetails = () => {
   //consts
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { getProductWithId } = useSelector((state) => state.product);
+  const { getProductWithId, allReviewsForSpecificProduct } = useSelector(
+    (state) => state.product
+  );
   const { userInfo } = useSelector((state) => state.auth);
 
+  //state
+  const [activeTab, setActiveTab] = useState(1);
+  const [ratingValue, setRatingValue] = useState(2);
+
+  //handlers
   useEffect(() => {
     dispatch(getSpecificProduct(id));
+    dispatch(getAllReviewsForSpecificProduct(id));
   }, []);
 
   if (!getProductWithId) {
@@ -29,9 +40,16 @@ const ProductDetails = () => {
     );
   }
 
-  const { productName, brand, price, description, photo, countInStock } =
-    getProductWithId;
-  const numReviews = getProductWithId.reviews.length;
+  const {
+    productName,
+    brand,
+    price,
+    description,
+    photo,
+    countInStock,
+    reviews,
+  } = getProductWithId;
+  const numReviews = reviews.length;
 
   return (
     // <>
@@ -406,6 +424,9 @@ const ProductDetails = () => {
                   <button
                     type="button"
                     className="px-2.5 py-1.5 bg-gray-100 text-xs text-gray-800 rounded-md flex items-center"
+                    onClick={() => {
+                      setActiveTab(2);
+                    }}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -536,19 +557,109 @@ const ProductDetails = () => {
           </div>
           <div className="mt-5 max-w-4xl">
             <ul className="flex border-b">
-              <li className="text-gray-800 font-semibold text-sm bg-gray-100 py-3 px-8 border-b-2 border-gray-800 cursor-pointer transition-all">
+              <li
+                className={`text-gray-500 font-semibold text-sm hover:bg-gray-100 py-3 px-8 cursor-pointer transition-all ${
+                  activeTab === 1
+                    ? "text-gray-800 border-b-2 border-gray-800"
+                    : ""
+                } `}
+                onClick={() => {
+                  setActiveTab(1);
+                }}
+              >
                 Description
               </li>
-              <li className="text-gray-500 font-semibold text-sm hover:bg-gray-100 py-3 px-8 cursor-pointer transition-all">
+              <li
+                className={`text-gray-500 font-semibold text-sm hover:bg-gray-100 py-3 px-8 cursor-pointer transition-all ${
+                  activeTab === 2
+                    ? "text-gray-800 border-b-2 border-gray-800"
+                    : ""
+                } `}
+                onClick={() => {
+                  setActiveTab(2);
+                }}
+              >
                 Reviews
+              </li>
+              <li
+                className={`text-gray-500 font-semibold text-sm hover:bg-gray-100 py-3 px-8 cursor-pointer transition-all ${
+                  activeTab === 3
+                    ? "text-gray-800 border-b-2 border-gray-800"
+                    : ""
+                } `}
+                onClick={() => {
+                  setActiveTab(3);
+                }}
+              >
+                Write your Review
               </li>
             </ul>
             <div className="mt-8">
-              <h3 className="text-xl font-bold text-gray-800">
-                Product Description
-              </h3>
-              <p className="text-sm text-gray-500 mt-4">{description}</p>
+              {activeTab === 1 && (
+                <>
+                  <h3 className="text-xl font-bold text-gray-800">
+                    Product Description
+                  </h3>
+                  <p className="text-sm text-gray-500 mt-4">{description}</p>
+                </>
+              )}
+
+              {activeTab === 2 && (
+                <>
+                  <div>
+                    {reviews.length === 0 && (
+                      <p>
+                        No reviews on this product , Be the first to comment 😊
+                      </p>
+                    )}
+                  </div>
+                  {allReviewsForSpecificProduct.map((review) => (
+                    <Review review={review} key={review._id} />
+                  ))}
+                </>
+              )}
+
+              {activeTab === 3 && (
+                <div>
+                  {!userInfo && (
+                    <Link to={"/login"}>
+                      Log in here and leave your review 😊{" "}
+                    </Link>
+                  )}
+
+                  <form>
+                    <label
+                      htmlFor="Rating"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Your rating
+                    </label>
+                    <Rating
+                      name="simple-controlled"
+                      value={ratingValue}
+                      precision={0.5}
+                      onChange={(e) => {
+                        setRatingValue(e.target.value);
+                      }}
+                    />
+                    <label
+                      htmlFor="message"
+                      className="block my-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Your Review
+                    </label>
+                    <textarea
+                      id="message"
+                      rows={4}
+                      className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500 "
+                      placeholder="Write your review here..."
+                      defaultValue={""}
+                    />
+                  </form>
+                </div>
+              )}
             </div>
+
             {/* <ul className="space-y-3 list-disc mt-6 pl-4 text-sm text-gray-500">
               <li>
                 A gray t-shirt is a wardrobe essential because it is so
