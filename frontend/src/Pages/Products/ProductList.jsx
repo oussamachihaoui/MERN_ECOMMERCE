@@ -14,6 +14,7 @@ const ProductList = () => {
     deletedProduct,
     updatedProduct,
   } = useSelector((state) => state.product);
+  const { userInfo } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -24,7 +25,7 @@ const ProductList = () => {
 
   return (
     <>
-      <AdminMenu />
+      {userInfo.isAdmin && <AdminMenu />}
       <div className="w-[94%] mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-10  mb-5">
         {loading ? (
           <div className="fixed top-0 right-0 h-screen w-screen z-50 flex justify-center items-center">

@@ -38,6 +38,7 @@ export const createProduct = createAsyncThunk(
         product
       );
       toast.success("Product created successfully");
+      return data;
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
@@ -92,6 +93,25 @@ export const getAllReviewsForSpecificProduct = createAsyncThunk(
         `http://localhost:5000/api/product/${id}/reviews`
       );
       return data;
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  }
+);
+
+// CREATE A REVIEW FOR SPECIFC PRODUCT
+
+export const createReviewForProduct = createAsyncThunk(
+  "/createReview",
+  async ({ reviewId, review }) => {
+    axios.defaults.withCredentials = true;
+    try {
+      const { data } = await axios.post(
+        `http://localhost:5000/api/product/${reviewId}/reviews`,
+        review
+      );
+      toast.success("Added review");
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
@@ -192,6 +212,20 @@ const productSlice = createSlice({
     );
 
     builder.addCase(getAllReviewsForSpecificProduct.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // CREATE REVIEW FOR A PRODUCT
+    builder.addCase(createReviewForProduct.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(createReviewForProduct.fulfilled, (state, action) => {
+      state.loading = false;
+      state.createdReviewForProduct = action.payload;
+    });
+
+    builder.addCase(createReviewForProduct.rejected, (state) => {
       state.loading = false;
     });
   },

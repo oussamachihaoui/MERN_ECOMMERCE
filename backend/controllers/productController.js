@@ -132,7 +132,16 @@ const addReview = expressAsyncHandler(async (req, res) => {
       res.status(404).json({
         message: "Product is not found",
       });
+      return;
     }
+
+    if (!comment || !rating) {
+      res.status(404).json({
+        message: "Please fill the inputs",
+      });
+      return;
+    }
+
     const review = await Review.create({
       comment: comment,
       rating: rating,

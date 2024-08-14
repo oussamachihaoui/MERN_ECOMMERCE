@@ -5,7 +5,7 @@ import { getAllProducts, updateProduct } from "../../Redux/apis/productSlice";
 import { getAllCatagories } from "../../Redux/apis/catagorySlice";
 
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const UpdateProduct = () => {
   // on open
@@ -19,7 +19,7 @@ const UpdateProduct = () => {
   const { allProducts } = useSelector((state) => state.product);
   const { loading } = useSelector((state) => state.product);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   // filter for the specific product by id
 
   const product = allProducts?.find((p) => p._id.toString() === id);
@@ -62,8 +62,10 @@ const UpdateProduct = () => {
           newUpdate: { ...editProduct, photo: data.url },
         })
       );
+      navigate(`/productDetails/${id}`);
     } else {
       dispatch(updateProduct({ id: id, newUpdate: { ...editProduct } }));
+      navigate(`/productDetails/${id}`);
     }
   };
 

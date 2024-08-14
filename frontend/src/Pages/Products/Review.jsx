@@ -2,7 +2,7 @@ import React from "react";
 import Rating from "@mui/material/Rating";
 const Review = ({ review }) => {
   return (
-    <div className="flex items-start mt-8  border-gray-200 border p-3 rounded-md relative">
+    <div className="flex items-start mt-8  shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] p-5 rounded-md relative">
       <img
         src={review.createdBy.photo}
         className="w-12 h-12 rounded-full border-2 border-white"
