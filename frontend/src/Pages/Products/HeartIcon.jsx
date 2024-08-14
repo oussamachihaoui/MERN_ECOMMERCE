@@ -24,11 +24,11 @@ const HeartIcon = ({ product }) => {
 
   return (
     <div
-      className="absolute top-2 right-5 cursor-pointer z-50"
+      className="absolute top-2 right-5 cursor-pointer z-30"
       onClick={toggleWishlist}
     >
       {isExists ? (
-        <FaHeart className="text-pink-500" size={24} />
+        <FaHeart className="text-red-500" size={24} />
       ) : (
         <FaRegHeart className="text-white" size={24} />
       )}

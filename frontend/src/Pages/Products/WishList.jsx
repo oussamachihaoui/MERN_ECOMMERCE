@@ -19,11 +19,11 @@ const WishList = () => {
   return (
     <>
       <AdminMenu />
-      <div className="font-[sans-serif] p-4 w-full mx-auto lg:max-w-5xl sm:max-w-2xl max-w-md">
+      <div className="font-[sans-serif] p-4 w-full mx-auto lg:max-w-6xl sm:max-w-2xl max-w-md">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {loading ? (
             <>
-              <div className="fixed top-0 right-0 h-screen w-screen z-50 flex justify-center items-center">
+              <div className="fixed top-0 right-0 h-screen w-screen z-20 flex justify-center items-center">
                 <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
               </div>
             </>

@@ -3,8 +3,16 @@ import { Product, Review } from "../Models/productModel.js";
 
 // create Product
 const createProduct = expressAsyncHandler(async (req, res) => {
-  const { productName, price, description, quantity, brand, catagory, photo } =
-    req.body;
+  const {
+    productName,
+    price,
+    description,
+    quantity,
+    brand,
+    catagory,
+    photo,
+    countInStock,
+  } = req.body;
 
   if (
     !productName ||
@@ -12,7 +20,8 @@ const createProduct = expressAsyncHandler(async (req, res) => {
     !description ||
     !quantity ||
     !brand ||
-    !catagory
+    !catagory ||
+    countInStock
   ) {
     res.status(400).json({
       message: "please fill the inputs",
@@ -28,6 +37,7 @@ const createProduct = expressAsyncHandler(async (req, res) => {
     catagory,
     price,
     photo,
+    countInStock,
   });
 
   if (product) {
@@ -61,8 +71,16 @@ const getSpecificProduct = expressAsyncHandler(async (req, res) => {
 
 // update product
 const updateProduct = expressAsyncHandler(async (req, res) => {
-  const { productName, price, description, quantity, brand, catagory, photo } =
-    req.body;
+  const {
+    productName,
+    price,
+    description,
+    quantity,
+    brand,
+    catagory,
+    photo,
+    countInStock,
+  } = req.body;
   const { id } = req.params;
   const product = await Product.findById(id);
 
@@ -74,6 +92,7 @@ const updateProduct = expressAsyncHandler(async (req, res) => {
     product.photo = photo || product.photo;
     product.price = price || product.price;
     product.quantity = quantity || product.quantity;
+    product.countInStock = countInStock || product.countInStock;
 
     const updatedProduct = await product.save();
     res.status(200).json(updatedProduct);

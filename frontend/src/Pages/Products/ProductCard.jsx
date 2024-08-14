@@ -7,7 +7,7 @@ const ProductCard = ({ product }) => {
   const { productName, brand, price, description, photo } = product;
 
   return (
-    <div className="relative flex w-80 flex-col  rounded-xl bg-gray-100/20 bg-clip-border text-gray-700 shadow-md mt-5">
+    <div className="relative flex w-96 flex-col  rounded-xl bg-gray-200/40 bg-clip-border text-gray-700 shadow-md mt-5">
       <div className="relative mx-4 mt-4 h-80 overflow-hidden rounded-xl  bg-clip-border text-gray-700 group">
         <HeartIcon product={product} />
         <img
