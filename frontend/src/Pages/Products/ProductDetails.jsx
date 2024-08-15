@@ -23,6 +23,7 @@ const ProductDetails = () => {
     allReviewsForSpecificProduct,
     createdReviewForProduct,
     updatedProduct,
+    deletedReview,
   } = useSelector((state) => state.product);
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -36,7 +37,7 @@ const ProductDetails = () => {
   useEffect(() => {
     dispatch(getSpecificProduct(id));
     dispatch(getAllReviewsForSpecificProduct(id));
-  }, [updatedProduct, createdReviewForProduct]);
+  }, [updatedProduct, createdReviewForProduct, deletedReview]);
 
   //handlers
   const handleReviewChange = function (e) {
@@ -52,9 +53,6 @@ const ProductDetails = () => {
       })
     );
   };
-
-  console.log(allReviewsForSpecificProduct);
-  console.log(createdReviewForProduct);
 
   if (!getProductWithId) {
     return (

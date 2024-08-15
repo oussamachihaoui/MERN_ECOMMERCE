@@ -135,9 +135,9 @@ const addReview = expressAsyncHandler(async (req, res) => {
       return;
     }
 
-    if (!comment || !rating) {
+    if (!comment) {
       res.status(404).json({
-        message: "Please fill the inputs",
+        message: "Please fill the input",
       });
       return;
     }

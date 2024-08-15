@@ -120,6 +120,25 @@ export const createReviewForProduct = createAsyncThunk(
   }
 );
 
+// DELETE A REVIEW FOR SPECIFIC PRODUCT
+
+export const deleteReview = createAsyncThunk(
+  "/deleteReview",
+  async (reviewId) => {
+    axios.defaults.withCredentials = true;
+    try {
+      const { data } = await axios.delete(
+        `http://localhost:5000/api/product/reviews/${reviewId}`
+      );
+      toast.success("Deleted review");
+      return data;
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  }
+);
+
 const productSlice = createSlice({
   name: "product",
   initialState: {},
@@ -227,6 +246,21 @@ const productSlice = createSlice({
     });
 
     builder.addCase(createReviewForProduct.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // DELETE REVIEW FROM A PRODUCT
+
+    builder.addCase(deleteReview.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(deleteReview.fulfilled, (state, action) => {
+      state.loading = false;
+      state.deletedReview = action.payload;
+    });
+
+    builder.addCase(deleteReview.rejected, (state) => {
       state.loading = false;
     });
   },
