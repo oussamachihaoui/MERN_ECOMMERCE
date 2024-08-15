@@ -12,6 +12,7 @@ import "./Navigation.css";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../Redux/apis/userSlice";
 import { clearCredentials } from "../../Redux/features/authSlice";
+import { NumOfWishlistItems } from "../../Components/NumOfWishlistItems";
 
 const Navigation = () => {
   // consts
@@ -77,12 +78,13 @@ const Navigation = () => {
           <span className="hidden nav-item-name mt-[3rem]">Cart</span>
         </Link>
         {/* wishlist */}
-        <Link
-          className="flex items-center transition-transform transform hover:translate-x-1"
-          to={"/wishlist"}
-        >
-          <MdFavoriteBorder className="mr-2 mt-[3rem] " size={26} />
-          <span className="hidden nav-item-name mt-[3rem]">Wishlist</span>
+        <Link className="flex  relative" to={"/wishlist"}>
+          <div className="flex justify-center items-center transition-transform transform hover:translate-x-2">
+            <MdFavoriteBorder className="mr-2 mt-[3rem]  " size={26} />
+
+            <span className="hidden nav-item-name mt-[3rem] ">Wishlist</span>
+            <NumOfWishlistItems />
+          </div>
         </Link>
       </div>
       {/* login */}

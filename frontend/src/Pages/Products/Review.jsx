@@ -37,7 +37,7 @@ const Review = ({ review }) => {
         !isOpen && "flex items-start mt-8  "
       } shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] p-5 rounded-md relative`}
     >
-      {userInfo.id === review.createdBy._id ? (
+      {userInfo.id === review.createdBy._id && !isOpen ? (
         <MdDelete
           className=" absolute bottom-2 right-2 text-red-600 cursor-pointer "
           size={20}
@@ -51,7 +51,7 @@ const Review = ({ review }) => {
         ""
       )}
 
-      {userInfo.id === review.createdBy._id ? (
+      {userInfo.id === review.createdBy._id && !isOpen ? (
         <MdEdit
           className="absolute bottom-2 text-sky-600 right-9 cursor-pointer"
           size={20}
@@ -110,6 +110,15 @@ const Review = ({ review }) => {
             >
               Update review
             </button>
+
+            <button
+              className="inline-flex items-center px-5 py-2.5 mt-4 ml-5 sm:mt-6 text-sm font-medium text-center bg-red-200 border border-red-300 text-gray-900 rounded-lg focus:ring-4 focus:ring-red-200  hover:bg-red-400/50 "
+              onClick={() => {
+                setIsOpen(false);
+              }}
+            >
+              Cancel
+            </button>
           </form>
         ) : (
           <>
@@ -121,7 +130,7 @@ const Review = ({ review }) => {
                 readOnly
                 size="small"
               />
-              <span className="text-xs  font-light absolute top-2 right-1">
+              <span className="text-xs  font-light absolute top-2 right-2">
                 {new Date(review.createdAt).toDateString()}
               </span>
             </div>
