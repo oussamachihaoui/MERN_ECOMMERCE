@@ -12,6 +12,7 @@ import AdminMenu from "../Admin/AdminMenu";
 import { BsBoxes } from "react-icons/bs";
 import Rating from "@mui/material/Rating";
 import Review from "./Review";
+import calculateAverageRating from "../../utils/calAverageReview";
 
 const ProductDetails = () => {
   //consts
@@ -24,6 +25,7 @@ const ProductDetails = () => {
     createdReviewForProduct,
     updatedProduct,
     deletedReview,
+    updatedReview,
   } = useSelector((state) => state.product);
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -37,7 +39,7 @@ const ProductDetails = () => {
   useEffect(() => {
     dispatch(getSpecificProduct(id));
     dispatch(getAllReviewsForSpecificProduct(id));
-  }, [updatedProduct, createdReviewForProduct, deletedReview]);
+  }, [updatedProduct, createdReviewForProduct, deletedReview, updatedReview]);
 
   //handlers
   const handleReviewChange = function (e) {
@@ -72,6 +74,7 @@ const ProductDetails = () => {
     reviews,
   } = getProductWithId;
   const numReviews = reviews.length;
+  const averageReview = calculateAverageRating(reviews);
 
   return (
     <>
@@ -194,7 +197,7 @@ const ProductDetails = () => {
                     >
                       <path d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
                     </svg>
-                    4.8
+                    {averageReview}
                   </button>
                   <button
                     type="button"
@@ -406,10 +409,7 @@ const ProductDetails = () => {
                     onSubmit={handleSubmitReview}
                     className="shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] p-8"
                   >
-                    <label
-                      htmlFor="Rating"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >
+                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                       Your rating
                     </label>
                     <Rating
@@ -418,11 +418,9 @@ const ProductDetails = () => {
                       onChange={(e, value) => {
                         setAddReview({ ...addReview, rating: value });
                       }}
+                      precision={0.5}
                     />
-                    <label
-                      htmlFor="message"
-                      className="block my-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >
+                    <label className="block my-2 text-sm font-medium text-gray-900 dark:text-white">
                       Your Review
                     </label>
                     <textarea

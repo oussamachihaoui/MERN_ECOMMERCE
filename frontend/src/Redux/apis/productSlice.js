@@ -120,6 +120,26 @@ export const createReviewForProduct = createAsyncThunk(
   }
 );
 
+//   UPDATE A REVIEW FOR SPECIFC PRODUCT
+
+export const updateReviw = createAsyncThunk(
+  "/updateReview",
+  async ({ reviewId, newReview }) => {
+    axios.defaults.withCredentials = true;
+    try {
+      const { data } = await axios.put(
+        `http://localhost:5000/api/product/reviews/${reviewId}`,
+        newReview
+      );
+      toast.success("Updated review");
+      return data;
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  }
+);
+
 // DELETE A REVIEW FOR SPECIFIC PRODUCT
 
 export const deleteReview = createAsyncThunk(
@@ -246,6 +266,20 @@ const productSlice = createSlice({
     });
 
     builder.addCase(createReviewForProduct.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // UPDATE A REVIEW FOR A PRODUCT
+    builder.addCase(updateReviw.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(updateReviw.fulfilled, (state, action) => {
+      state.loading = false;
+      state.updatedReview = action.payload;
+    });
+
+    builder.addCase(updateReviw.rejected, (state) => {
       state.loading = false;
     });
 
