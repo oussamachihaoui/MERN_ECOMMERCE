@@ -83,7 +83,7 @@ const Navigation = () => {
             <MdFavoriteBorder className="mr-2 mt-[3rem]  " size={26} />
 
             <span className="hidden nav-item-name mt-[3rem] ">Wishlist</span>
-            <NumOfWishlistItems />
+            {userInfo && <NumOfWishlistItems />}
           </div>
         </Link>
       </div>

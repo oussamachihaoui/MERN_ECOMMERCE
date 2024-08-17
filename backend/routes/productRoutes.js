@@ -11,6 +11,8 @@ import {
   getAllReviews,
   updateReview,
   deleteReview,
+  fetchNewProducts,
+  fetchTopProducts,
 } from "../controllers/productController.js";
 
 const router = express.Router();
@@ -18,6 +20,8 @@ const router = express.Router();
 // CRUD PRODUCT
 router.post("/", authenticate, authorizeAdmin, createProduct);
 router.get("/", getAllProducts);
+router.get("/new", fetchNewProducts);
+router.get("/top", fetchTopProducts);
 router.get("/:id", getSpecificProduct);
 router.put("/:id", authenticate, authorizeAdmin, updateProduct);
 router.delete("/:id", authenticate, authorizeAdmin, deleteProduct);

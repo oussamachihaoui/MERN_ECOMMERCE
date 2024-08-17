@@ -21,11 +21,12 @@ const createProduct = expressAsyncHandler(async (req, res) => {
     !quantity ||
     !brand ||
     !catagory ||
-    countInStock
+    !countInStock
   ) {
     res.status(400).json({
       message: "please fill the inputs",
     });
+
     return;
   }
 
@@ -119,6 +120,28 @@ const deleteProduct = expressAsyncHandler(async (req, res) => {
   }
 });
 
+// QUERING PRODUCTS FOR HOME PAGE LATER
+
+const fetchNewProducts = expressAsyncHandler(async (req, res) => {
+  try {
+    const product = await Product.find({}).sort({ createdAt: -1 }).limit(6);
+    res.json(product);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error.message);
+  }
+});
+
+const fetchTopProducts = expressAsyncHandler(async (req, res) => {
+  try {
+    const product = await Product.find({}).sort({ numReviews: -1 }).limit(4);
+    res.jsonp(product);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error.message);
+  }
+});
+
 // REVIEWS ON SPECIFIC PRODUCT
 
 // create review
@@ -149,6 +172,7 @@ const addReview = expressAsyncHandler(async (req, res) => {
     });
 
     product.reviews.push(review._id);
+    product.numReviews = product.reviews.length;
     await product.save();
     res.status(200).json(product.reviews);
   } catch (error) {
@@ -246,4 +270,6 @@ export {
   getAllReviews,
   updateReview,
   deleteReview,
+  fetchNewProducts,
+  fetchTopProducts,
 };

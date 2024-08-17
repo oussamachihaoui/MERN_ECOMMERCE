@@ -33,6 +33,7 @@ const productSchema = mongoose.Schema(
     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
     rating: { type: Number, require: true, default: 0 },
     countInStock: { type: Number, require: true, default: 0 },
+    numReviews: { type: Number, default: 0 },
   },
   { timestamps: true }
 );

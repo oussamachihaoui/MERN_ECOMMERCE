@@ -1,11 +1,16 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllWishlist } from "../Redux/apis/userSlice";
 
 export const NumOfWishlistItems = () => {
+  const dispatch = useDispatch();
   const { allWishlistProducts } = useSelector((state) => state.user);
 
   const numOfWishlist = allWishlistProducts?.wishlist?.length;
 
+  useEffect(() => {
+    dispatch(getAllWishlist());
+  }, []);
   return (
     <div className="absolute left-4 top-8">
       {numOfWishlist > 0 ? (

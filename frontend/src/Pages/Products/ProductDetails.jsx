@@ -13,6 +13,7 @@ import { BsBoxes } from "react-icons/bs";
 import Rating from "@mui/material/Rating";
 import Review from "./Review";
 import calculateAverageRating from "../../utils/calAverageReview";
+import { getAllUsers } from "../../Redux/apis/userSlice";
 
 const ProductDetails = () => {
   //consts
@@ -28,6 +29,7 @@ const ProductDetails = () => {
     updatedReview,
   } = useSelector((state) => state.product);
   const { userInfo } = useSelector((state) => state.auth);
+  const { allUsers } = useSelector((state) => state.user);
 
   //state
   const [activeTab, setActiveTab] = useState(1);
@@ -39,6 +41,7 @@ const ProductDetails = () => {
   useEffect(() => {
     dispatch(getSpecificProduct(id));
     dispatch(getAllReviewsForSpecificProduct(id));
+    // dispatch(getAllUsers());
   }, [updatedProduct, createdReviewForProduct, deletedReview, updatedReview]);
 
   //handlers
@@ -55,6 +58,10 @@ const ProductDetails = () => {
       })
     );
   };
+
+  // const users = allUsers?.map((e) => e.wishlist.filter((wish) => wish === id));
+
+  // console.log(users);
 
   if (!getProductWithId) {
     return (
