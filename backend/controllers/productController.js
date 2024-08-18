@@ -142,6 +142,20 @@ const fetchTopProducts = expressAsyncHandler(async (req, res) => {
   }
 });
 
+const fetchRandomProducts = expressAsyncHandler(async (req, res) => {
+  try {
+    const products = await Product.aggregate([
+      {
+        $sample: { size: 8 },
+      },
+    ]);
+    res.json(products);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error.message);
+  }
+});
+
 // REVIEWS ON SPECIFIC PRODUCT
 
 // create review
@@ -272,4 +286,5 @@ export {
   deleteReview,
   fetchNewProducts,
   fetchTopProducts,
+  fetchRandomProducts,
 };

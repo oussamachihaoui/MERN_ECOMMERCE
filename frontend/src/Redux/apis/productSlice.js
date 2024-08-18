@@ -159,6 +159,47 @@ export const deleteReview = createAsyncThunk(
   }
 );
 
+// FETCHING PRODUCTS//////////////////////
+
+// Fetching new products by date
+export const fetchNewProducts = createAsyncThunk("/newProducts", async () => {
+  axios.defaults.withCredentials = true;
+  try {
+    const { data } = await axios.get("http://localhost:5000/api/product/new");
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// Fetching products by num of reviews
+export const fetchTopProducts = createAsyncThunk("/topProducts", async () => {
+  axios.defaults.withCredentials = true;
+  try {
+    const { data } = await axios.get("http://localhost:5000/api/product/top");
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// Fetching random products
+
+export const fetchRandomProducts = createAsyncThunk(
+  "/randomProducts",
+  async () => {
+    axios.defaults.withCredentials = true;
+    try {
+      const { data } = await axios.get(
+        "http://localhost:5000/api/product/random"
+      );
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 const productSlice = createSlice({
   name: "product",
   initialState: {},
@@ -295,6 +336,51 @@ const productSlice = createSlice({
     });
 
     builder.addCase(deleteReview.rejected, (state) => {
+      state.loading = false;
+    });
+
+    //////////////////////////////////////////////
+    // FETCHING PRODUCTS
+
+    //FETCHING NEW PRODUCTS BY DATE
+    builder.addCase(fetchNewProducts.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(fetchNewProducts.fulfilled, (state, action) => {
+      state.loading = false;
+      state.allNewProducts = action.payload;
+    });
+
+    builder.addCase(fetchNewProducts.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // FETCHING TOP PRODUCTS BY NUM OF REVIEWS
+    builder.addCase(fetchTopProducts.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(fetchTopProducts.fulfilled, (state, action) => {
+      state.loading = false;
+      state.allTopProducts = action.payload;
+    });
+
+    builder.addCase(fetchTopProducts.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // FETCHING RANDOM PRODUCTS
+    builder.addCase(fetchRandomProducts.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(fetchRandomProducts.fulfilled, (state, action) => {
+      state.loading = false;
+      state.randomProducts = action.payload;
+    });
+
+    builder.addCase(fetchRandomProducts.rejected, (state) => {
       state.loading = false;
     });
   },

@@ -37,30 +37,34 @@ const Review = ({ review }) => {
         !isOpen && "flex items-start mt-8  "
       } shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] p-5 rounded-md relative`}
     >
-      {userInfo.id === review.createdBy._id && !isOpen ? (
-        <MdDelete
-          className=" absolute bottom-2 right-2 text-red-600 cursor-pointer "
-          size={20}
-          onClick={() => {
-            confirm("Are you sure to delete your review?")
-              ? dispatch(deleteReview(review._id))
-              : "";
-          }}
-        />
-      ) : (
-        ""
-      )}
+      {userInfo && (
+        <>
+          {userInfo.id === review.createdBy._id && !isOpen ? (
+            <MdDelete
+              className=" absolute bottom-2 right-2 text-red-600 cursor-pointer "
+              size={20}
+              onClick={() => {
+                confirm("Are you sure to delete your review?")
+                  ? dispatch(deleteReview(review._id))
+                  : "";
+              }}
+            />
+          ) : (
+            ""
+          )}
 
-      {userInfo.id === review.createdBy._id && !isOpen ? (
-        <MdEdit
-          className="absolute bottom-2 text-sky-600 right-9 cursor-pointer"
-          size={20}
-          onClick={() => {
-            setIsOpen(!isOpen);
-          }}
-        />
-      ) : (
-        ""
+          {userInfo.id === review.createdBy._id && !isOpen ? (
+            <MdEdit
+              className="absolute bottom-2 text-sky-600 right-9 cursor-pointer"
+              size={20}
+              onClick={() => {
+                setIsOpen(!isOpen);
+              }}
+            />
+          ) : (
+            ""
+          )}
+        </>
       )}
 
       <img

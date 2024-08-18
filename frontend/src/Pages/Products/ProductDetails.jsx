@@ -85,7 +85,7 @@ const ProductDetails = () => {
 
   return (
     <>
-      {userInfo.isAdmin && <AdminMenu />}
+      {userInfo && userInfo.isAdmin && <AdminMenu />}
       <div className="font-sans">
         <div className=" mx-auto p-4 lg:max-w-6xl max-w-2xl max-lg:mx-auto">
           <div className="grid items-start grid-cols-1 lg:grid-cols-2 gap-8 max-lg:gap-16 ">
@@ -130,7 +130,7 @@ const ProductDetails = () => {
                   <p className="text-sm text-gray-500 mt-2">{brand}</p>
                 </div>
                 <div className="ml-auto flex flex-wrap gap-4">
-                  <button
+                  {/* <button
                     type="button"
                     className="px-2.5 py-1.5 bg-pink-100 text-xs text-pink-600 rounded-md flex items-center"
                   >
@@ -147,7 +147,7 @@ const ProductDetails = () => {
                       />
                     </svg>
                     100
-                  </button>
+                  </button> */}
                   {/* <button
                     type="button"
                     className="px-2.5 py-1.5 bg-gray-100 text-xs text-gray-800 rounded-md flex items-center"
@@ -398,7 +398,7 @@ const ProductDetails = () => {
                       </p>
                     )}
                   </div>
-                  {allReviewsForSpecificProduct.map((review) => (
+                  {allReviewsForSpecificProduct?.map((review) => (
                     <Review review={review} key={review._id} />
                   ))}
                 </>
@@ -406,45 +406,48 @@ const ProductDetails = () => {
 
               {activeTab === 3 && (
                 <div>
-                  {!userInfo && (
-                    <Link className=" hover:underline" to={"/login"}>
-                      Log in here and leave your review 😊{" "}
+                  {userInfo ? (
+                    <form
+                      onSubmit={handleSubmitReview}
+                      className="shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] p-8"
+                    >
+                      <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Your rating
+                      </label>
+                      <Rating
+                        name="simple-controlled"
+                        defaultValue={0}
+                        onChange={(e, value) => {
+                          setAddReview({ ...addReview, rating: value });
+                        }}
+                        precision={0.5}
+                      />
+                      <label className="block my-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Your Review
+                      </label>
+                      <textarea
+                        id="message"
+                        rows={4}
+                        className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500 "
+                        placeholder="Write your review here..."
+                        name="comment"
+                        onChange={handleReviewChange}
+                      />
+                      <button
+                        type="submit"
+                        className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-4 focus:ring-sky-200 dark:focus:ring-sky-900  hover:bg-gray-300/50 "
+                      >
+                        Add Review
+                      </button>
+                    </form>
+                  ) : (
+                    <Link
+                      className=" hover:underline text-sm text-gray-500 mt-4"
+                      to={"/login"}
+                    >
+                      Click here to log in here and leave your review 😊{" "}
                     </Link>
                   )}
-
-                  <form
-                    onSubmit={handleSubmitReview}
-                    className="shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] p-8"
-                  >
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                      Your rating
-                    </label>
-                    <Rating
-                      name="simple-controlled"
-                      defaultValue={0}
-                      onChange={(e, value) => {
-                        setAddReview({ ...addReview, rating: value });
-                      }}
-                      precision={0.5}
-                    />
-                    <label className="block my-2 text-sm font-medium text-gray-900 dark:text-white">
-                      Your Review
-                    </label>
-                    <textarea
-                      id="message"
-                      rows={4}
-                      className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500 "
-                      placeholder="Write your review here..."
-                      name="comment"
-                      onChange={handleReviewChange}
-                    />
-                    <button
-                      type="submit"
-                      className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-4 focus:ring-sky-200 dark:focus:ring-sky-900  hover:bg-gray-300/50 "
-                    >
-                      Add Review
-                    </button>
-                  </form>
                 </div>
               )}
             </div>

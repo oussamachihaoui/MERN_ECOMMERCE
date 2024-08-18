@@ -13,6 +13,7 @@ import {
   deleteReview,
   fetchNewProducts,
   fetchTopProducts,
+  fetchRandomProducts,
 } from "../controllers/productController.js";
 
 const router = express.Router();
@@ -22,6 +23,7 @@ router.post("/", authenticate, authorizeAdmin, createProduct);
 router.get("/", getAllProducts);
 router.get("/new", fetchNewProducts);
 router.get("/top", fetchTopProducts);
+router.get("/random", fetchRandomProducts);
 router.get("/:id", getSpecificProduct);
 router.put("/:id", authenticate, authorizeAdmin, updateProduct);
 router.delete("/:id", authenticate, authorizeAdmin, deleteProduct);
