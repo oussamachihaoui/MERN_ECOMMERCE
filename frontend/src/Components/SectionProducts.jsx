@@ -20,8 +20,8 @@ const SectionProducts = () => {
         <h1 className="ml-[20rem] mt-[10rem] text-[3rem]">Special Products</h1>
 
         <Link
-          to="/shop"
-          className="bg-emerald-600 font-bold rounded-full text-white py-2 px-10 mr-[18rem] mt-[10rem]"
+          to="/productlist"
+          className="bg-emerald-400 font-bold rounded-full text-white py-2 px-10 mr-[18rem] mt-[10rem]"
         >
           Shop
         </Link>

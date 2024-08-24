@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllWishlist } from "../../Redux/apis/userSlice";
 import Product from "./Product";
 import AdminMenu from "../Admin/AdminMenu";
+import { getAllCartProducts } from "../../Redux/features/cartSlice";
 
 const WishList = () => {
   const dispatch = useDispatch();
   const { allWishlistProducts, loading, deletedFromWishlist, addedToWishlist } =
     useSelector((state) => state.user);
   const { userInfo } = useSelector((state) => state.auth);
+
   //on open
   useEffect(() => {
     dispatch(getAllWishlist());
@@ -19,7 +21,7 @@ const WishList = () => {
 
   return (
     <>
-      {userInfo.isAdmin && <AdminMenu />}
+      {userInfo && userInfo.isAdmin && <AdminMenu />}
       <div className="font-[sans-serif] p-4 w-full mx-auto lg:max-w-6xl sm:max-w-2xl max-w-md">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {loading ? (

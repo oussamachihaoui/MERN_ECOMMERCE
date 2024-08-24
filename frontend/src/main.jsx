@@ -23,6 +23,7 @@ import AddProduct from "./Pages/Admin/AddProduct.jsx";
 import UpdateProduct from "./Pages/Admin/UpdateProduct.jsx";
 import WishList from "./Pages/Products/WishList.jsx";
 import Home from "./Pages/Home.jsx";
+import Cart from "./Pages/Cart/Cart.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,17 +32,19 @@ const router = createBrowserRouter(
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route path="/productDetails/:id" element={<ProductDetails />} />
+      <Route path="/productlist" element={<ProductList />} />
 
       <Route path="" element={<PrivateRoute />}>
         <Route path="/profile" element={<Profile />} />
         <Route path="/wishlist" element={<WishList />} />
+        <Route path="/cart" element={<Cart />} />
       </Route>
 
       {/* ADMIN */}
       <Route path="/admin" element={<AdminRoute />}>
         <Route path="users" element={<UsersList />} />
         <Route path="categorylist" element={<CatagoryList />} />
-        <Route path="productlist" element={<ProductList />} />
+
         <Route path="addProduct" element={<AddProduct />} />
         <Route path="updateProduct/:id" element={<UpdateProduct />} />
       </Route>

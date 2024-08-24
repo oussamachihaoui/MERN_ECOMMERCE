@@ -8,6 +8,7 @@ import catagoryRoutes from "./routes/catagoryRoutes.js";
 import cors from "cors";
 import productRoutes from "./routes/productRoutes.js";
 import wishlistRouter from "./routes/wishlistRoutes.js";
+import cartRoutes from "./routes/cartRoutes.js";
 
 //utils
 dotenv.config();
@@ -31,6 +32,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/catagory", catagoryRoutes);
 app.use("/api/product", productRoutes);
 app.use("/api/wishlist", wishlistRouter);
+app.use("/api/cart", cartRoutes);
 //listen
 app.listen(PORT, () => {
   console.log(`Listening On port ${PORT}`);

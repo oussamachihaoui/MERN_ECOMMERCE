@@ -5,7 +5,6 @@ import {
   addProductToWishlist,
   deleteProductFromWishlist,
 } from "../../Redux/apis/userSlice";
-import toast from "react-hot-toast";
 
 const HeartIcon = ({ product }) => {
   //consts

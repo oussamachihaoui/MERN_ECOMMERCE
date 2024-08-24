@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import HeartIcon from "./HeartIcon";
+import CartButton from "../Cart/CartButton";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCartProducts } from "../../Redux/features/cartSlice";
 
 const ProductCard = ({ product }) => {
   //consts
+  const dispatch = useDispatch();
+  const { deletedProductFromCart, addProductsToCart } = useSelector(
+    (state) => state.cart
+  );
   const { productName, brand, price, description, photo } = product;
+
+  useEffect(() => {
+    dispatch(getAllCartProducts());
+  }, [deletedProductFromCart, addProductsToCart]);
 
   return (
     <div className="relative flex w-96 flex-col  rounded-xl bg-gray-200/40 bg-clip-border text-gray-700 shadow-md mt-5">
@@ -43,12 +54,13 @@ const ProductCard = ({ product }) => {
         </p>
       </div>
       <div className="p-6 pt-0">
-        <button
+        {/* <button
           className="block w-full select-none rounded-lg bg-gray-900/10 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-blue-gray-900 transition-all hover:scale-105 focus:scale-105 focus:opacity-[0.85] active:scale-100 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
           type="button"
         >
           Add to Cart
-        </button>
+        </button> */}
+        <CartButton productId={product._id} />
       </div>
     </div>
   );

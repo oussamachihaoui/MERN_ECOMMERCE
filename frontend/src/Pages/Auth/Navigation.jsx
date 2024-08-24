@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../Redux/apis/userSlice";
 import { clearCredentials } from "../../Redux/features/authSlice";
 import { NumOfWishlistItems } from "../../Components/NumOfWishlistItems";
+import NumOfCartItems from "../../Components/NumOfCartItems";
 
 const Navigation = () => {
   // consts
@@ -64,7 +65,7 @@ const Navigation = () => {
         {/* shop */}
         <Link
           className="flex items-center transition-transform transform hover:translate-x-1"
-          to={"/shop"}
+          to={"/productlist"}
         >
           <AiOutlineShopping className="mr-2 mt-[3rem] " size={26} />
           <span className="hidden nav-item-name mt-[3rem]">Shop</span>
@@ -76,6 +77,7 @@ const Navigation = () => {
         >
           <AiOutlineShoppingCart className="mr-2 mt-[3rem] " size={26} />
           <span className="hidden nav-item-name mt-[3rem]">Cart</span>
+          {userInfo && <NumOfCartItems />}
         </Link>
         {/* wishlist */}
         <Link className="flex  relative" to={"/wishlist"}>

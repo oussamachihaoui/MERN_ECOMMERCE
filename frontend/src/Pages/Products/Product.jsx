@@ -1,11 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import HeartIcon from "./HeartIcon";
+import {
+  addProductsToCart,
+  getAllCartProducts,
+} from "../../Redux/features/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import CartButton from "../Cart/CartButton";
 
 const Product = ({ product }) => {
+  //const
+  const dispatch = useDispatch();
+  const { deletedProductFromCart, addProductsToCart } = useSelector(
+    (state) => state.cart
+  );
+
+  useEffect(() => {
+    dispatch(getAllCartProducts());
+  }, [deletedProductFromCart, addProductsToCart]);
+
   return (
     <div className="bg-zinc-200 rounded-md overflow-hidden cursor-pointer">
-      <div className="w-full h-80  overflow-hidden group relative">
+      <div className="w-full h-72  overflow-hidden group relative">
         <HeartIcon product={product} />
         <img
           src={product.photo}
@@ -23,19 +39,23 @@ const Product = ({ product }) => {
           </div>
         </div>
       </div>
-      <div className="p-6 ">
-        <div className="mb-6 flex items-center justify-center flex-wrap gap-4  mt-auto">
+      <div className="p-4 flex flex-col justify-between h-40 ">
+        <div className=" flex items-center justify-center flex-wrap gap-4 ">
           <h3 className="text-lg font-bold text-gray-800">
             {product.productName}
           </h3>
           <p className="text-lg text-blue-600 font-bold">{`${product.price} DT`}</p>
         </div>
-        <button
+        {/* <button
           type="button"
           className="w-full px-5 py-2.5 bg-blue-600 hover:bg-blue-700 font-bold text-white rounded-lg"
+          onClick={() => {
+            dispatch(addProductsToCart(product._id));
+          }}
         >
           Add to cart
-        </button>
+        </button> */}
+        <CartButton productId={product._id} />
       </div>
     </div>
   );

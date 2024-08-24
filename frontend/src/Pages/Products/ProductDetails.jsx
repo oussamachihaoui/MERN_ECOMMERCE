@@ -14,6 +14,8 @@ import Rating from "@mui/material/Rating";
 import Review from "./Review";
 import calculateAverageRating from "../../utils/calAverageReview";
 import { getAllUsers } from "../../Redux/apis/userSlice";
+import { getAllCartProducts } from "../../Redux/features/cartSlice";
+import CartButton from "../Cart/CartButton";
 
 const ProductDetails = () => {
   //consts
@@ -28,6 +30,9 @@ const ProductDetails = () => {
     deletedReview,
     updatedReview,
   } = useSelector((state) => state.product);
+  const { deletedProductFromCart, addProductsToCart } = useSelector(
+    (state) => state.cart
+  );
   const { userInfo } = useSelector((state) => state.auth);
   const { allUsers } = useSelector((state) => state.user);
 
@@ -41,8 +46,16 @@ const ProductDetails = () => {
   useEffect(() => {
     dispatch(getSpecificProduct(id));
     dispatch(getAllReviewsForSpecificProduct(id));
+    dispatch(getAllCartProducts());
     // dispatch(getAllUsers());
-  }, [updatedProduct, createdReviewForProduct, deletedReview, updatedReview]);
+  }, [
+    updatedProduct,
+    createdReviewForProduct,
+    deletedReview,
+    updatedReview,
+    deletedProductFromCart,
+    addProductsToCart,
+  ]);
 
   //handlers
   const handleReviewChange = function (e) {
@@ -59,10 +72,6 @@ const ProductDetails = () => {
     );
   };
 
-  // const users = allUsers?.map((e) => e.wishlist.filter((wish) => wish === id));
-
-  // console.log(users);
-
   if (!getProductWithId) {
     return (
       <div className="fixed top-0 right-0 h-screen w-screen z-50 flex justify-center items-center">
@@ -72,6 +81,7 @@ const ProductDetails = () => {
   }
 
   const {
+    _id,
     productName,
     brand,
     price,
@@ -302,7 +312,7 @@ const ProductDetails = () => {
               </div> */}
               {/* <hr className="my-8" /> */}
               <div className="flex flex-wrap gap-4">
-                {userInfo ? (
+                {userInfo && userInfo.isAdmin ? (
                   <>
                     <button
                       type="button"
@@ -323,18 +333,26 @@ const ProductDetails = () => {
                   </>
                 ) : (
                   <>
-                    <button
+                    {/* <select onChange={(e) => {}}>
+                      {[
+                        ...Array.from({ length: countInStock }, (_, i) => (
+                          <option value={i + 1} key={i}>
+                            {i + 1}
+                          </option>
+                        )),
+                      ]}
+                    </select> */}
+                    {/* <button
+                      disabled={!userInfo && true}
                       type="button"
-                      className="min-w-[200px] px-4 py-3 bg-gray-800 hover:bg-gray-900 text-white text-sm font-semibold rounded-md"
-                    >
-                      Buy now
-                    </button>
-                    <button
-                      type="button"
-                      className="min-w-[200px] px-4 py-2.5 border border-gray-800 bg-transparent hover:bg-gray-50 text-gray-800 text-sm font-semibold rounded-md"
+                      className="min-w-[200px] px-4 py-2.5 border border-gray-800 bg-transparent hover:bg-gray-300 text-gray-800 text-sm font-semibold rounded-md"
+                      onClick={() => {
+                        dispatch(addProductsToCart(_id));
+                      }}
                     >
                       Add to cart
-                    </button>
+                    </button> */}
+                    <CartButton productId={_id} />
                   </>
                 )}
               </div>

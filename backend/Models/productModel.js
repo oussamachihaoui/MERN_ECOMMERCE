@@ -22,7 +22,7 @@ const productSchema = mongoose.Schema(
       default:
         "https://mahadevfastfoodvns.websites.co.in/twenty-seventeen/img/product-placeholder.png",
     },
-    quantity: { type: Number, require: true, default: 0 },
+    quantity: { type: Number, require: true, default: 1 },
     price: { type: Number, require: true, default: 0 },
     description: { type: String, require: true },
     catagory: {

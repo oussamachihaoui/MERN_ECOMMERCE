@@ -111,7 +111,7 @@ export const createReviewForProduct = createAsyncThunk(
         `http://localhost:5000/api/product/${reviewId}/reviews`,
         review
       );
-      toast.success("Added review");
+      toast.success("Added your review");
       return data;
     } catch (error) {
       console.log(error);
@@ -150,7 +150,7 @@ export const deleteReview = createAsyncThunk(
       const { data } = await axios.delete(
         `http://localhost:5000/api/product/reviews/${reviewId}`
       );
-      toast.success("Deleted review");
+      toast.success("Deleted your review");
       return data;
     } catch (error) {
       console.log(error);
