@@ -10,7 +10,7 @@ export const createCatagory = createAsyncThunk(
     axios.defaults.withCredentials = true;
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/catagory/",
+        "https://ecommerce-j630.onrender.com/api/catagory/",
         catagory
       );
       toast.success("Catagory is created successfully");
@@ -26,7 +26,9 @@ export const createCatagory = createAsyncThunk(
 export const getAllCatagories = createAsyncThunk("/catagories", async () => {
   axios.defaults.withCredentials = true;
   try {
-    const { data } = await axios.get("http://localhost:5000/api/catagory/");
+    const { data } = await axios.get(
+      "https://ecommerce-j630.onrender.com/api/catagory/"
+    );
     return data;
   } catch (error) {
     toast.error(error.response.data.message);
@@ -41,7 +43,7 @@ export const updateCatagory = createAsyncThunk(
     axios.defaults.withCredentials = true;
     try {
       const { data } = await axios.put(
-        `http://localhost:5000/api/catagory/${catagoryId}`,
+        `https://ecommerce-j630.onrender.com/api/catagory/${catagoryId}`,
         { name: newName, photo: newPhoto }
       );
       toast.success("Updated Successfully");
@@ -60,7 +62,7 @@ export const deleteCatagory = createAsyncThunk(
     axios.defaults.withCredentials = true;
     try {
       const { data } = await axios.delete(
-        `http://localhost:5000/api/catagory/${id}`
+        `https://ecommerce-j630.onrender.com/api/catagory/${id}`
       );
       toast.success("Deleted catagory successfully");
       return data;

@@ -6,7 +6,9 @@ import toast from "react-hot-toast";
 export const getAllProducts = createAsyncThunk("/products", async () => {
   axios.defaults.withCredentials = true;
   try {
-    const { data } = await axios.get("http://localhost:5000/api/product/");
+    const { data } = await axios.get(
+      "https://ecommerce-j630.onrender.com/api/product/"
+    );
     return data;
   } catch (error) {
     console.log(error);
@@ -19,7 +21,9 @@ export const getAllProducts = createAsyncThunk("/products", async () => {
 export const getSpecificProduct = createAsyncThunk("/productId", async (id) => {
   axios.defaults.withCredentials = true;
   try {
-    const { data } = await axios.get(`http://localhost:5000/api/product/${id}`);
+    const { data } = await axios.get(
+      `https://ecommerce-j630.onrender.com/api/product/${id}`
+    );
     return data;
   } catch (error) {
     console.log(data);
@@ -34,7 +38,7 @@ export const createProduct = createAsyncThunk(
     axios.defaults.withCredentials = true;
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/product/",
+        "https://ecommerce-j630.onrender.com/api/product/",
         product
       );
       toast.success("Product created successfully");
@@ -53,7 +57,7 @@ export const updateProduct = createAsyncThunk(
     axios.defaults.withCredentials = true;
     try {
       const { data } = await axios.put(
-        `http://localhost:5000/api/product/${id}`,
+        `https://ecommerce-j630.onrender.com/api/product/${id}`,
         newUpdate
       );
       toast.success("Updated successfully");
@@ -71,7 +75,7 @@ export const deleteProduct = createAsyncThunk("/deleteProduct", async (id) => {
   axios.defaults.withCredentials = true;
   try {
     const { data } = await axios.delete(
-      `http://localhost:5000/api/product/${id}`
+      `https://ecommerce-j630.onrender.com/api/product/${id}`
     );
     toast.success("Product is deleted successfully");
     return data;
@@ -90,7 +94,7 @@ export const getAllReviewsForSpecificProduct = createAsyncThunk(
     axios.defaults.withCredentials = true;
     try {
       const { data } = await axios.get(
-        `http://localhost:5000/api/product/${id}/reviews`
+        `https://ecommerce-j630.onrender.com/api/product/${id}/reviews`
       );
       return data;
     } catch (error) {
@@ -108,7 +112,7 @@ export const createReviewForProduct = createAsyncThunk(
     axios.defaults.withCredentials = true;
     try {
       const { data } = await axios.post(
-        `http://localhost:5000/api/product/${reviewId}/reviews`,
+        `https://ecommerce-j630.onrender.com/api/product/${reviewId}/reviews`,
         review
       );
       toast.success("Added your review");
@@ -128,7 +132,7 @@ export const updateReviw = createAsyncThunk(
     axios.defaults.withCredentials = true;
     try {
       const { data } = await axios.put(
-        `http://localhost:5000/api/product/reviews/${reviewId}`,
+        `https://ecommerce-j630.onrender.com/api/product/reviews/${reviewId}`,
         newReview
       );
       toast.success("Updated review");
@@ -148,7 +152,7 @@ export const deleteReview = createAsyncThunk(
     axios.defaults.withCredentials = true;
     try {
       const { data } = await axios.delete(
-        `http://localhost:5000/api/product/reviews/${reviewId}`
+        `https://ecommerce-j630.onrender.com/api/product/reviews/${reviewId}`
       );
       toast.success("Deleted your review");
       return data;
@@ -165,7 +169,9 @@ export const deleteReview = createAsyncThunk(
 export const fetchNewProducts = createAsyncThunk("/newProducts", async () => {
   axios.defaults.withCredentials = true;
   try {
-    const { data } = await axios.get("http://localhost:5000/api/product/new");
+    const { data } = await axios.get(
+      "https://ecommerce-j630.onrender.com/api/product/new"
+    );
     return data;
   } catch (error) {
     console.log(error);
@@ -176,7 +182,9 @@ export const fetchNewProducts = createAsyncThunk("/newProducts", async () => {
 export const fetchTopProducts = createAsyncThunk("/topProducts", async () => {
   axios.defaults.withCredentials = true;
   try {
-    const { data } = await axios.get("http://localhost:5000/api/product/top");
+    const { data } = await axios.get(
+      "https://ecommerce-j630.onrender.com/api/product/top"
+    );
     return data;
   } catch (error) {
     console.log(error);
@@ -191,7 +199,7 @@ export const fetchRandomProducts = createAsyncThunk(
     axios.defaults.withCredentials = true;
     try {
       const { data } = await axios.get(
-        "http://localhost:5000/api/product/random"
+        "https://ecommerce-j630.onrender.com/api/product/random"
       );
       return data;
     } catch (error) {

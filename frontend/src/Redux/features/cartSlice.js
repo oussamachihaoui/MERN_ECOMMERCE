@@ -7,7 +7,9 @@ export const addProductsToCart = createAsyncThunk(
   async (id) => {
     axios.defaults.withCredentials = true;
     try {
-      const { data } = await axios.post(`http://localhost:5000/api/cart/${id}`);
+      const { data } = await axios.post(
+        `https://ecommerce-j630.onrender.com/api/cart/${id}`
+      );
       toast.success("Added product to your cart");
       return data;
     } catch (error) {
@@ -22,7 +24,9 @@ export const getAllCartProducts = createAsyncThunk(
   async () => {
     axios.defaults.withCredentials = true;
     try {
-      const { data } = await axios.get("http://localhost:5000/api/cart/");
+      const { data } = await axios.get(
+        "https://ecommerce-j630.onrender.com/api/cart/"
+      );
       return data;
     } catch (error) {
       console.log(error);
@@ -36,7 +40,7 @@ export const deleteProductFromCart = createAsyncThunk(
     axios.defaults.withCredentials = true;
     try {
       const { data } = await axios.delete(
-        `http://localhost:5000/api/cart/${id}`
+        `https://ecommerce-j630.onrender.com/api/cart/${id}`
       );
       toast.success("Removed from your cart");
       return data;

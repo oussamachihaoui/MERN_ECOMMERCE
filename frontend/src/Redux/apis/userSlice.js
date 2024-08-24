@@ -11,7 +11,7 @@ export const login = createAsyncThunk(
 
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/users/auth",
+        "https://ecommerce-j630.onrender.com/api/users/auth",
         user
       );
       dispatch(setCredentials(data));
@@ -28,7 +28,9 @@ export const login = createAsyncThunk(
 export const logout = createAsyncThunk("/user/logout", async (navigate) => {
   axios.defaults.withCredentials = true;
   try {
-    const { data } = await axios.post("http://localhost:5000/api/users/logout");
+    const { data } = await axios.post(
+      "https://ecommerce-j630.onrender.com/api/users/logout"
+    );
     navigate("/");
     toast.success("Logged Out successfully");
     return data;
@@ -42,7 +44,10 @@ export const logout = createAsyncThunk("/user/logout", async (navigate) => {
 export const signUp = createAsyncThunk("/user/signup", async (user) => {
   axios.defaults.withCredentials = true;
   try {
-    const { data } = await axios.post("http://localhost:5000/api/users", user);
+    const { data } = await axios.post(
+      "https://ecommerce-j630.onrender.com/api/users",
+      user
+    );
 
     toast.success("Account created Successfully");
     return data;
@@ -57,7 +62,7 @@ export const updateUserCredentials = createAsyncThunk(
     axios.defaults.withCredentials = true;
     try {
       const { data } = await axios.put(
-        "http://localhost:5000/api/users/",
+        "https://ecommerce-j630.onrender.com/api/users/",
         user
       );
       toast.success("Updated successfully");
@@ -74,7 +79,9 @@ export const updateUserCredentials = createAsyncThunk(
 export const getAllWishlist = createAsyncThunk("/wishlist", async () => {
   axios.defaults.withCredentials = true;
   try {
-    const { data } = await axios.get("http://localhost:5000/api/wishlist/");
+    const { data } = await axios.get(
+      "https://ecommerce-j630.onrender.com/api/wishlist/"
+    );
     return data;
   } catch (error) {
     console.log(error);
@@ -88,7 +95,7 @@ export const addProductToWishlist = createAsyncThunk(
     axios.defaults.withCredentials = true;
     try {
       const { data } = await axios.post(
-        `http://localhost:5000/api/wishlist/${id}`
+        `https://ecommerce-j630.onrender.com/api/wishlist/${id}`
       );
       toast.success("Added to wishlist");
       dispatch(getAllWishlist());
@@ -106,7 +113,7 @@ export const deleteProductFromWishlist = createAsyncThunk(
     axios.defaults.withCredentials = true;
     try {
       const { data } = await axios.delete(
-        `http://localhost:5000/api/wishlist/${id}`
+        `https://ecommerce-j630.onrender.com/api/wishlist/${id}`
       );
       toast.success("Deleted from wishlist");
       dispatch(getAllWishlist());
@@ -124,7 +131,9 @@ export const deleteProductFromWishlist = createAsyncThunk(
 export const getAllUsers = createAsyncThunk("/admin/users", async () => {
   axios.defaults.withCredentials = true;
   try {
-    const { data } = await axios.get("http://localhost:5000/api/users/");
+    const { data } = await axios.get(
+      "https://ecommerce-j630.onrender.com/api/users/"
+    );
     return data;
   } catch (error) {
     console.log(error.response.data.message);
@@ -137,7 +146,7 @@ export const deleteUser = createAsyncThunk(
     axios.defaults.withCredentials = true;
     try {
       const { data } = await axios.delete(
-        `http://localhost:5000/api/users/${id}`
+        `https://ecommerce-j630.onrender.com/api/users/${id}`
       );
       toast.success("User is deleted successfully");
       return data;
