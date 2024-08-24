@@ -68,7 +68,7 @@ const Register = () => {
                 />
               </svg>
               <input
-                className="pl-2 outline-none border-none"
+                className="pl-2 outline-none ring-0  focus:ring-transparent border-none"
                 type="text"
                 name="firstName"
                 id="firstName"
@@ -93,7 +93,7 @@ const Register = () => {
                 />
               </svg>
               <input
-                className="pl-2 outline-none border-none"
+                className="pl-2 outline-none ring-0  focus:ring-transparent border-none"
                 type="text"
                 name="lastName"
                 id="lastName"
@@ -118,7 +118,7 @@ const Register = () => {
                 />
               </svg>
               <input
-                className=" pl-2 outline-none  "
+                className=" pl-2 outline-none ring-0  focus:ring-transparent border-none "
                 type="email"
                 name="email"
                 id="email"
@@ -142,7 +142,7 @@ const Register = () => {
                 />
               </svg>
               <input
-                className="pl-2 outline-none border-none"
+                className="pl-2 outline-none ring-0  focus:ring-transparent border-none"
                 type="password"
                 name="password"
                 id="password"
@@ -166,7 +166,7 @@ const Register = () => {
                 />
               </svg>
               <input
-                className="pl-2 outline-none border-none"
+                className="pl-2 outline-none ring-0  focus:ring-transparent border-none"
                 type="password"
                 name="confirmPassword"
                 id="confirmPassword"

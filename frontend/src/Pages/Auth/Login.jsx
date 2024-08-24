@@ -63,7 +63,7 @@ const Login = () => {
                 />
               </svg>
               <input
-                className=" pl-2 outline-none  "
+                className=" border-none outline-none ring-0  focus:ring-transparent "
                 type="email"
                 name="email"
                 id="email"
@@ -87,7 +87,7 @@ const Login = () => {
                 />
               </svg>
               <input
-                className="pl-2 outline-none border-none"
+                className="outline-none ring-0 border-none focus:ring-transparent"
                 type="password"
                 name="password"
                 id="password"
@@ -112,7 +112,7 @@ const Login = () => {
         </div>
         <img
           className="relative overflow-hidden md:flex w-1/2  i justify-around items-center hidden"
-          src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1964&q=80"
+          src="https://images.unsplash.com/photo-1488554378835-f7acf46e6c98?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         />
       </div>
     </>
